@@ -1,0 +1,87 @@
+<div class="container py-5" id="proyectos">
+    <h1 class="text-center mb-4">Algunos proyectos</h1>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <!-- Proyecto Psytrack -->
+        <div class="col">
+            <div class="project-card">
+                <img src="psytrack_image_url" alt="Imagen de Psytrack" class="img-fluid">
+                <div class="p-3">
+                    <h3 class="project-title">Psytrack</h3>
+                    <p class="project-description">Aplicación en la que los psicólogos clínicos pueden llevar el registro de los usuarios que están atendiendo. Demuestra el uso de Django y DRF en el backend, así como de JavaScript, React y AntDesign en el frontend. Integra formularios complejos, gestión de usuarios y autenticación mediante token. Despliegue en PythonAnywhere.</p>
+                    <a href="psytrack_project_url" class="btn btn-primary">Ir al proyecto</a>
+                </div>
+            </div>
+        </div>
+        <!-- Proyecto SQLite3 ENCSPA -->
+        <div class="col">
+            <div class="project-card">
+                <img src="encspa_image_url" alt="Mapa de Colombia" class="img-fluid">
+                <div class="p-3">
+                    <h3 class="project-title">Preparación SQLite3 ENCSPA - 2019</h3>
+                    <p class="project-description">Aplicación simple para la generación de base de datos SQLite3 y diccionarios de datos en formato JSON, a partir de los archivos .csv de la Encuesta Nacional de Consumo de SPA en Colombia.</p>
+                    <a href="https://carlos-velez.vercel.app/_astro/encspa.obafklI4.png" class="btn btn-primary">Ir al proyecto</a>
+                </div>
+            </div>
+        </div>
+        <!-- Proyecto Índice de Cambio Fiable -->
+        <div class="col">
+            <div class="project-card">
+                <img src="change_index_image_url" alt="Imagen del proyecto" class="img-fluid">
+                <div class="p-3">
+                    <h3 class="project-title">Calculadora del índice de cambio fiable</h3>
+                    <p class="project-description">Aplicación simple para el cálculo del Índice de Cambio Fiable; medida popular en la investigación clínica para identificar cambios clínicamente significativos. Uso de TypeScript, React, Mantine y NextJS. Despliegue en Vercel.</p>
+                    <a href="change_index_project_url" class="btn btn-primary">Ir al proyecto</a>
+                </div>
+            </div>
+        </div>
+        <!-- Proyecto Tejiendo Vínculos -->
+        <div class="col">
+            <div class="project-card">
+                <img src="tejiendo_vinculos_image_url" alt="Imagen del proyecto" class="img-fluid">
+                <div class="p-3">
+                    <h3 class="project-title">Sitio Tejiendo Vínculos</h3>
+                    <p class="project-description">Página web estática para una organización sin ánimo de lucro. Demuestra el uso de Astro para la creación simple de páginas web estáticas. Despliegue en Netlify.</p>
+                    <a href="tejiendo_vinculos_project_url" class="btn btn-primary">Ir al proyecto</a>
+                </div>
+            </div>
+        </div>
+        <!-- Otros Proyectos -->
+        <div class="col">
+            <div class="project-card">
+                <img src="github_image_url" alt="Imagen de GitHub" class="img-fluid">
+                <div class="p-3">
+                    <h3 class="project-title">Otros Proyectos</h3>
+                    <p class="project-description">Otros proyectos y scripts a los que se puede acceder a través de mi dashboard en GitHub.</p>
+                    <a href="github_url" class="btn btn-primary">Ir a GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .project-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    .project-card img {
+        height: 200px;
+        object-fit: cover;
+    }
+    .project-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+    .project-description {
+        font-size: 0.95rem;
+        color: #555;
+    }
+</style>

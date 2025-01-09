@@ -1,0 +1,45 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Post principal -->
+            <div class="card mb-4">
+                
+                <img src="{{ post.image_url }}" class="card-img-top" alt="{{ post.title }}">
+                
+                <div class="card-body">
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <p class="text-muted">
+                        <small>
+                            Publicado por <strong>{{ post.author}}</strong> en {{ post.created_at|date:"F j, Y" }}
+                        </small>
+                    </p>
+                    <hr>
+                    <div class="card-text">
+                        <p>{{ post.text|linebreaksbr }}</p>
+                    </div>
+                    <!-- Botón para leer más o volver al listado -->
+                    <a href="{% url 'mi_sitio:blog' %}" class="btn btn-primary">Volver a los posts</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title">Últimos Posts</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Aquí puedes renderizar una lista de posts recientes -->
+                    <ul class="list-unstyled">
+                        {% for recent_post in recent_posts %}
+                        <li>
+                            <a href="{% url 'mi_sitio:post_display' post.slug %}">{{ recent_post.title }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

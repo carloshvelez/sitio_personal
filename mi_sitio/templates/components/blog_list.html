@@ -1,0 +1,64 @@
+<div class="container mt-5">
+    <h1 class="mb-4">Bievenido a mi blog</h1>
+    <p class="lead">Aquí encontrarás los últimos posts de mi blog. ¡Espero que te gusten!</p>
+
+    <div class="row">
+
+        {% for post in page_obj %}
+
+        <div class="col-md-4">
+            <!-- Card para cada post -->
+            <div class="card mb-4">                
+                <img src="{{ post.image_url }}" class="card-img-top" alt="{{ post.title }}">                
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="text-muted">
+                        <small>
+                            Publicado por <strong>{{ post.author }}</strong> en {{ post.created_at|date:"F j, Y" }}
+                        </small>
+                    </p>
+                    <p class="card-text">{{ post.excerpt|slice:":150" }}...</p>
+                    <a href="{% url 'mi_sitio:post_display' post.slug %}" class="btn btn-primary">Leer más</a>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- Controles de Paginación -->
+    <nav aria-label="Paginación">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="Primera página">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Página anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Página siguiente">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última página">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>

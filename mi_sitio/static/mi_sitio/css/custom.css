@@ -1,0 +1,35 @@
+/* Add these styles to your existing custom.css */
+
+/* Blog cards */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Pagination improvements */
+.page-link {
+    border: none;
+    padding: 0.75rem 1rem;
+    color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.page-link:hover {
+    background-color: #f8f9fa;
+    color: var(--bs-primary);
+}
+
+.page-item.disabled .page-link {
+    background: none;
+    color: #6c757d;
+}
+
+/* Badge styling */
+.badge {
+    padding: 0.5em 1em;
+    font-weight: 500;
+}

@@ -1,0 +1,14 @@
+{
+    "builds": [
+        {
+            "src": "sitio_personal/wsgi.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "sitio_personal/wsgi.py"
+        }
+    ]
+}

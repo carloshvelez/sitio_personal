@@ -1,0 +1,54 @@
+<div class="container py-5" id="blog">
+    <h1 class="text-center mb-4">Últimos Posts del Blog</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <!-- Post 1 -->
+        
+        {% for post in last_posts %}
+
+        <div class="col">
+            <div class="blog-post-card">
+                <img src="{{post.image_url}}" alt="Imagen del Post" class="img-fluid">
+                <div class="p-3">
+                    <h3 class="blog-post-title">{{post.title}}</h3>
+                    <p class="blog-post-excerpt">{{post.excerpt}}</p>
+                    <a href="{% url 'mi_sitio:post_display' post.slug %}" class="btn btn-primary">Leer más</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'mi_sitio:blog' %}" class="btn btn-secondary">Ver todos los posts</a>
+    </div>
+</div>
+
+
+
+
+
+
+<style>
+    .blog-post-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .blog-post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    .blog-post-card img {
+        height: 150px;
+        object-fit: cover;
+    }
+    .blog-post-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    .blog-post-excerpt {
+        font-size: 0.95rem;
+        color: #555;
+    }
+</style>

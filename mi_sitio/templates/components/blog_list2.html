@@ -1,0 +1,84 @@
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge bg-primary mb-3">Blog</span>
+            <h1 class="display-4 fw-bold mb-3">Bienvenido a mi blog</h1>
+            <p class="lead text-muted mx-auto" style="max-width: 600px;">Aquí encontrarás los últimos posts de mi blog. ¡Espero que te gusten!</p>
+        </div>
+
+        <div class="row g-4">
+            {% for post in page_obj %}
+            <div class="col-md-6 col-lg-4">
+                <article class="card h-100 border-0 shadow-sm">
+                    {% if post.image_url %}
+                    <div class="position-relative">
+                        <img src="{{ post.image_url }}" 
+                             class="card-img-top" 
+                             alt="{{ post.title }}"
+                             style="height: 240px; object-fit: cover;">
+                        <div class="position-absolute top-0 start-0 m-3">
+                            <span class="badge bg-primary">Blog</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://ui-avatars.com/api/?name={{ post.author|urlencode }}&background=random" 
+                                 class="rounded-circle me-2"
+                                 alt="{{ post.author }}"
+                                 width="24" height="24">
+                            <span class="text-muted small">{{ post.author }}</span>
+                            <span class="text-muted small ms-auto">{{ post.created_at|date:"d M, Y" }}</span>
+                        </div>
+                        
+                        <h2 class="h5 fw-bold mb-3">{{ post.title }}</h2>
+                        <p class="text-muted mb-4">{{ post.excerpt|slice:":150" }}...</p>
+                        
+                        <a href="{% url 'mi_sitio:post_display' post.slug %}" 
+                           class="btn btn-outline-primary">
+                            Leer más <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if page_obj.paginator.num_pages > 1 %}
+        <nav class="mt-5" aria-label="Paginación">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="Primera">
+                        <i class="bi bi-chevron-double-left"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                        <i class="bi bi-chevron-double-right"></i>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</section>

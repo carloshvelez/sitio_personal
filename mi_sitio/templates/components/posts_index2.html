@@ -1,0 +1,30 @@
+<section id="blog" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Últimos Artículos</h2>
+        <div class="row g-4">
+            {% for post in last_posts %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    {% if post.image_url %}
+                    <img src="{{ post.image_url }}" class="card-img-top" alt="{{ post.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            
+                            
+                        </div>
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text text-muted">{{ post.excerpt }}</p>
+                        <a href="{% url 'mi_sitio:post_display' post.slug %}" class="btn btn-link text-primary p-0">
+                            Leer más <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'mi_sitio:blog' %}" class="btn btn-outline-primary">Ver todos los artículos</a>
+        </div>
+    </div>
+</section>

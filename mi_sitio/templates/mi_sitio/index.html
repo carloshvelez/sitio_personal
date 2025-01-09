@@ -1,0 +1,13 @@
+
+{% extends 'layouts/base.html' %}
+
+{% block title %} Inicio - Carlos Vélez {% endblock %}
+
+{% block content %}
+
+{% include 'components/hero2.html' with texto_principal='Carlos Vélez' texto_secundario='Soy psicólogo clínico y docente. Me apasionan la salud mental, la programación y el análisis de datos' %}
+{% include 'components/posts_index2.html' %}
+{% include 'components/proyectos2.html' %}
+
+
+{% endblock %}
