@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
+from markdownx import urls as markdownx_urls
+
 
 urlpatterns = [
     path('', include('mi_sitio.urls')),
     path('admin/', admin.site.urls),
+    path('markdownx/', include(markdownx_urls)), 
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

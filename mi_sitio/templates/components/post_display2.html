@@ -25,12 +25,12 @@
                         <i class="bi bi-person-circle me-2"></i>
                         <span>{{ post.author }}</span>
                         <i class="bi bi-calendar3 ms-4 me-2"></i>
-                        <span>{{ post.created_at|date:"F j, Y" }}</span>
+                        <span>{{ post.published_at|date:"d M, Y" }}</span>
                     </div>
                     {% endif %}
                     
                     <div class="post-content prose">
-                        {{ post.text|linebreaksbr }}
+                        {{ post.text_html|safe }}
                     </div>
                     
                     <div class="mt-5">

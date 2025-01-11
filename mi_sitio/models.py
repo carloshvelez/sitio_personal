@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from django.utils.text import slugify
+import markdown
+from markdownx.models import MarkdownxField
 
 # Create your models here.
 
@@ -17,7 +19,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     image_url = models.CharField(max_length=500, default="/static/mi_sitio/images/default_post.webp")
     excerpt = models.TextField(blank=True, null=True)
-    text = models.TextField()
+    text = MarkdownxField("Contenido en MarkDown")
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     created_at = models.DateTimeField(auto_now_add=True)    
     published_at = models.DateTimeField(blank=True, null=True)
@@ -47,6 +49,9 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post_display', args=[self.slug])
+    
+    def text_html(self):
+        return markdown.markdown(self.text, extensions=['extra', 'codehilite', 'toc'])
 
     
 class Technology(models.Model):
