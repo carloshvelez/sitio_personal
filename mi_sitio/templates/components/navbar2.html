@@ -9,17 +9,15 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#inicio">Inicio</a>
+                    <a class="nav-link" href="{% url 'mi_sitio:index' %}#inicio">Inicio</a>
+                </li>                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mi_sitio:index' %}#blog">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#proyectos">Proyectos</a>
+                    <a class="nav-link" href="{% url 'mi_sitio:index' %}#proyectos">Proyectos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#blog">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#contacto">Contacto</a>
-                </li>
+                
             </ul>
         </div>
     </div>

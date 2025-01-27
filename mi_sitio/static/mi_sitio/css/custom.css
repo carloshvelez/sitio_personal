@@ -1,31 +1,73 @@
-/* Add these styles to your existing custom.css */
+:root {
+    /* Light theme variables */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --border-color: #dee2e6;
+    --card-bg: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+    --navbar-bg: #ffffff;
+    --footer-bg: #0d6efd;
+}
+
+[data-theme='dark'] {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --text-primary: #ffffff;
+    --text-secondary: #adb5bd;
+    --border-color: #2d3436;
+    --card-bg: #1e1e1e;
+    --card-shadow: rgba(255, 255, 255, 0.05);
+    --navbar-bg: #1e1e1e;
+    --footer-bg: #0d47a1;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: var(--navbar-bg) !important;
+    box-shadow: 0 2px 4px var(--card-shadow) !important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: var(--text-secondary);
+}
 
 /* Blog cards */
 .card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 8px 16px var(--card-shadow) !important;
 }
 
 /* Pagination improvements */
 .page-link {
     border: none;
     padding: 0.75rem 1rem;
-    color: #6c757d;
+    color: var(--text-secondary);
+    background-color: var(--card-bg);
     transition: all 0.3s ease;
 }
 
 .page-link:hover {
-    background-color: #f8f9fa;
+    background-color: var(--bg-secondary);
     color: var(--bs-primary);
 }
 
 .page-item.disabled .page-link {
     background: none;
-    color: #6c757d;
+    color: var(--text-secondary);
 }
 
 /* Badge styling */
@@ -36,8 +78,7 @@
 
 /* Footer styling */
 .footer {
-    /*background: linear-gradient(to right, #2d3436, #2c3e50);*/
-    background: blue;
+    background: var(--footer-bg);
 }
 
 .social-icons {
@@ -64,4 +105,19 @@
     color: white;
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.theme-toggle:hover {
+    color: var(--bs-primary);
 }
