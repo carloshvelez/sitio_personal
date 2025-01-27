@@ -67,6 +67,9 @@ class Project(models.Model):
     description = models.TextField()    
     created_at = models.DateTimeField(auto_now_add=True)
     image_url = models.CharField(max_length=500, default="/static/mi_sitio/images/default_project.webp")
+    url = models.URLField(max_length=200, blank=True, null=True)
+    github_url = models.URLField(max_length=200, blank=True, null=True)
+    demo_url = models.URLField(max_length=200, blank=True, null=True)
     technologies = models.ManyToManyField(Technology, related_name='projects')
     
 
