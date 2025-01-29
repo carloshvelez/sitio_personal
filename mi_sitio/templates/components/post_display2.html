@@ -12,7 +12,7 @@
                             <i class="bi bi-person-circle me-2"></i>
                             <span>{{ post.author }}</span>
                             <i class="bi bi-calendar3 ms-4 me-2"></i>
-                            <span>{{ post.created_at|date:"F j, Y" }}</span>
+                            <span>{{ post.published_at|date:"d M, Y" }}</span>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                     </h5>
                     <div class="list-group list-group-flush">
                         {% for recent_post in recent_posts %}
-                        <a href="{% url 'mi_sitio:post_display' post.slug %}" 
+                        <a href="{% url 'mi_sitio:post_display' recent_post.slug %}" 
                            class="list-group-item list-group-item-action d-flex align-items-center py-3 px-0 border-top">
                             {% if recent_post.image_url %}
                             <img src="{{ recent_post.image_url }}" 
@@ -62,7 +62,7 @@
                             {% endif %}
                             <div>
                                 <h6 class="mb-1">{{ recent_post.title }}</h6>
-                                <small class="text-muted">{{ recent_post.created_at|date:"M j, Y" }}</small>
+                                <small class="text-muted">{{ recent_post.published_at|date:"M j, Y" }}</small>
                             </div>
                         </a>
                         {% endfor %}
