@@ -2,11 +2,8 @@
     "builds": [
         {
             "src": "sitio_personal/wsgi.py",
-            "use": "@vercel/python"
-        },
-        {
-            "src": "staticfiles/(.*)",
-            "use": "@vercel/static"
+            "use": "@vercel/python",
+            "config": { "maxLambdaSize": "15mb", "runtime": "python3.13" }
         }
     ],
     "routes": [
