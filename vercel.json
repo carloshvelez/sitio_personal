@@ -1,12 +1,12 @@
 
 {
-    "builds": {        
+    "builds": [{        
         "use": "@vercel/python",
         "src": "sitio_personal/wsgi.py",
         "config": {
             "maxLambdaSize": "15mb", "runtime": "python3.13.1"
         }
-    },
+    }],
     "routes": [        
         {
             "src": "/(.*)",
