@@ -1,18 +1,13 @@
 
 {
-    "build": {
-        "env": {
-            "DJANGO_SETTINGS_MODULE": "sitio_personal.settings",
-            "PYTHON_VERSION": "3.12" 
-        },
+    "builds": {        
         "use": "@vercel/python",
-        "src": "sitio_personal/wsgi.py"
+        "src": "sitio_personal/wsgi.py",
+        "config": {
+            "maxLambdaSize": "15mb", "runtime": "python3.13.1"
+        }
     },
-    "routes": [
-        {
-            "src": "/static/(.*)",
-            "dest": "staticfiles/$1"
-        },
+    "routes": [        
         {
             "src": "/(.*)",
             "dest": "sitio_personal/wsgi.py"
