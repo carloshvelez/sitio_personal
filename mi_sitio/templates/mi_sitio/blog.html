@@ -1,5 +1,12 @@
 {% extends 'layouts/base.html' %}
+
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
+<header>
+    {% with nav_title=":: Blog" nav_subtitle="personal ::" %}
+    {% include 'components/navbar2.html' %}
+    {% endwith %}
+    
+</header>
 {% include 'components/blog_list2.html' %}
 {% endblock %}

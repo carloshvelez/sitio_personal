@@ -28,10 +28,11 @@
     
 </head>
 <body>
-
+    {% with nav_title=":: Empat" nav_subtitle="IA ::" %}
     {% include 'components/navbar2.html' %}
-    <h1 aria-label="EmpatIA" class="main-title">Empat-IA</h1>
-    
+    {% endwith %}
+  
+    <h1 class="main-title">Empat IA</h1>
     <h3 id="secondary-title">Simulador de entrevista clínica</h3>
     
     <style>
@@ -135,7 +136,7 @@
 
     <footer class="app-footer">
         <div id="footer-info">
-            <p>Desarrollado por Carlos Humberto Vélez Ocampo con ayuda de IA</p>
+            <p>Desarrollado por Carlos Humberto Vélez Ocampo</p>
             <p>Fundación Universitaria Konrad Lorenz</p>
             <p>Especialización y Maestría en psicología clínica</p>
             <p>Curso Evaluación psicológica y análisis funcional</p>
@@ -145,4 +146,5 @@
 </body>
 <script type="module" src="{% static 'empatia/js/patients.js' %}"></script>
 <script type="module" src="{% static 'empatia/js/script.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>

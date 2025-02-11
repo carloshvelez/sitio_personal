@@ -105,7 +105,7 @@ body {
 .general-container {
     margin: 0 auto;
     width: 100%;
-    max-width: 900px;
+    max-width: 750px;
 }
 
 @media (max-width: 768px) {
@@ -126,11 +126,15 @@ body {
     .main-title {
         font-size: 2rem;
         margin-bottom: 0;
+        text-align: center;
     }
     #secondary-title {
         font-size: 1rem;
         margin: 0;
         text-align: center;        
+    }
+    .message{
+        max-width: 85%;
     }
 }
 
@@ -170,7 +174,7 @@ textarea#user-input {
     margin: 12px 0;
     padding: 12px 16px;
     border-radius: 12px;
-    max-width: 80%;
+    max-width: 75%;
     animation: fadeIn 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
@@ -178,13 +182,13 @@ textarea#user-input {
     background: var(--primary);
     margin-left: auto;
     color: white;
-    padding: 3px 10px;
+    padding: 10px;
 }
 .bot-message {
     background: var(--secondary);
     margin-right: auto;
     border: 1px solid var(--border);
-    padding: 3px, 10px;
+    padding: 10px;
 }
 #config-panel {
     position: fixed;
@@ -357,6 +361,7 @@ button:focus {
     color: var(--accent);
     font-size: 2rem;
     margin-bottom: .5rem;
+    margin-top: 1rem;
     text-align: center;
     font-weight: 700;
 }
