@@ -34,6 +34,8 @@ ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
+    'empatia',
     'mi_sitio.apps.MiSitioConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -146,6 +148,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'mi_sitio/static'),
+    os.path.join(BASE_DIR, 'empatia/static'),
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

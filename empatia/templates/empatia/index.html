@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<!--
+    EmpatIA - Simulador de entrevista clínica
+    Copyright © 2024 Carlos Humberto Vélez Ocampo
+    All rights reserved.
+-->
+<html lang="es">
+<head>
+
+   
+    
+    
+    {% load static %}
+   
+
+
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Empat IA - Simulador de Entrevista</title>
+    <link rel="stylesheet" href="{% static 'empatia/css/styles.css' %}">    
+    
+    
+</head>
+<body>
+    
+    
+    <h1 aria-label="EmpatIA" class="main-title">Empat-IA</h1>
+    
+    <p class="secondary-title">Simulador de entrevista clínica</p>
+    
+    <style>
+    </style>
+    <button class="menu-toggle" id="config-toggle" aria-label="Mostrar el menú de configuración">
+        <div class="menu-icon" id="config-icon"></div>
+    </button>
+    <div class="modal-overlay" id="modal-overlay"></div>
+    
+    <div class="container">
+        
+        <div id="chat-container">
+            <div id="setup-message">
+                <h4>⚠️ Configuración Necesaria</h4>
+                <p>Por favor, antes de comenzar asegúrate de:</p>
+                <ol>
+                    <li>Seleccionar un paciente.</li>
+                    <li>Ingresar tu nombre como terapeuta.</li>
+                    <li>Configurar el modelo de IA a utilizar.</li>
+                </ol>
+            </div>
+            <div id="patient-info">
+                <h3 id="patient-name"></h3>
+                <p id="patient-details"></p>
+            </div>
+            <div id="messages"></div>
+            <div style="position: relative; display: flex; align-items: center; gap: 10px;">
+                <textarea id="user-input" placeholder="Escribe tu intervención..." style="flex: 1;"></textarea>
+                <button id="send-message-btn" style="width: 50px; height: 50px; padding: 0; margin: 5px 0; display: flex; align-items: center; justify-content: center; border-radius: 50%;">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <div class="secondary-buttons-container">
+                <button class="secondary-button" id="new-conversation-btn">Nueva conversación</button>
+                <button class="secondary-button" id="export-pdf-btn">Descargar PDF</button>
+            </div>
+            
+        </div>
+
+
+
+        <div id="config-panel">
+            <div class="config-section-container">
+                <h3>Configuración de la Conversación</h3>
+                <div id="conversation-config">
+                    <div class="config-item">
+                        <label>Paciente:</label>
+                        <select id="patient-select"></select>
+                    </div>
+                    <div class="config-item">
+                        <label>Nombre del Terapeuta:</label>
+                        <input type="text" id="therapist-name" placeholder="Ingrese su nombre">
+                    </div>
+                </div>
+
+                <h3>Configuración del Modelo</h3>
+                <div id="model-config">
+                    <div class="config-item">
+                        <label>Proveedor:</label>
+                        <select id="llm-provider">
+                            <option value="openai">OpenAI</option>
+                            <option value="google">Google AI</option>
+                            <option value="deepseek">DeepSeek</option>
+                            <option value="ollama">Ollama (Local)</option>
+                        </select>
+                    </div>
+
+                    <div id="openai-config" class="config-section">        
+                        <label>Clave API:</label>                
+                        <input type="text" id="openai-key" placeholder="API Key OpenAI">
+                    </div>
+
+                    <div id="google-config" class="config-section">
+                        <label>Clave API:</label>
+                        <input type="text" id="google-key" placeholder="API Key Google">
+                        <label>Modelo:</label>
+                        <input type="text" id="google-model" placeholder="Modelo (ej: gemini-pro)">
+                    </div>
+
+                    <div id="deepseek-config" class="config-section">
+                        <label>Clave API:</label>
+                        <input type="text" id="deepseek-key" placeholder="API Key DeepSeek">
+                    </div>
+
+                    <div id="ollama-config" class="config-section">
+                        <input type="text" id="ollama-url" placeholder="URL (ej: http://localhost:11434)">
+                        <input type="text" id="ollama-model" placeholder="Modelo (ej: llama2)">
+                    </div>
+
+                    <div class="config-item">
+                        <label>Longitud máxima de respuestas:</label>
+                        <input type="number" id="max-tokens" min="100" max="2000" step="50" value="500">
+                    </div>
+                </div>
+
+                <button id="save-config-btn">Guardar Configuración</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <footer class="app-footer">
+        <div id="footer-info">
+            <p>Desarrollado por Carlos Humberto Vélez Ocampo con ayuda de IA</p>
+            <p>Fundación Universitaria Konrad Lorenz</p>
+            <p>Especialización y Maestría en psicología clínica</p>
+            <p>Curso Evaluación psicológica y análisis funcional</p>
+        </div>
+    </footer>
+
+</body>
+<script type="module" src="{% static 'empatia/js/patients.js' %}"></script>
+<script type="module" src="{% static 'empatia/js/script.js' %}"></script>
+</html>

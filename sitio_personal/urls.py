@@ -23,6 +23,7 @@ from markdownx import urls as markdownx_urls
 
 urlpatterns = [
     path('', include('mi_sitio.urls')),
+    path('empatia/', include('empatia.urls')),
     path('admin/', admin.site.urls),
     path('markdownx/', include(markdownx_urls)), 
 ]
