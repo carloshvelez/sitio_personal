@@ -81,6 +81,8 @@ function saveConfig() {
     config.ollama.url = document.getElementById('ollama-url').value;
     config.ollama.model = document.getElementById('ollama-model').value;
     localStorage.setItem('llm-config', JSON.stringify(config));
+
+    
     
     // Show toast notification
     const toast = document.createElement('div');
@@ -129,6 +131,11 @@ async function sendMessage() {
     const userInput = document.getElementById('user-input');
     const message = userInput.value.trim();
     if (!message) return;
+
+    let privacyWarning = document.getElementById('privacy-warning');
+    if (privacyWarning){
+        privacyWarning.remove()        
+    }
 
     addMessage(message, 'user');
     userInput.value = '';
@@ -347,7 +354,7 @@ function checkConfiguration() {
     if (provider === 'ollama'){        
         isConfigured = patient && therapist
         console.log(isConfigured)
-    } else {
+    } else{
         isConfigured = patient && therapist && providerKey;
     }
     
@@ -373,8 +380,21 @@ function checkConfiguration() {
     document.getElementById('user-input').placeholder = isConfigured ? 
         'Escribe tu intervención...' : 'Complete la configuración antes de comenzar...';
     
+
+        if (isConfigured && !document.getElementById('privacy-warning')){
+            // Add privacy warning
+            let privacyWarning = document.createElement("p")
+            privacyWarning.id = "privacy-warning"            
+            privacyWarning.textContent = "Empat IA no recolecta ningún dato. El proveedor de IA puede guardar y analizar tu conversación. No uses información confidencial. Ahora puedes iniciar la conversación"
+            let messagesContainer = document.getElementById("messages")
+            messagesContainer.appendChild(privacyWarning)
+            console.log("hola")
+        }
+
     return isConfigured;
 }
+
+
 
 window.onload = () => {
     initPatientSelector();

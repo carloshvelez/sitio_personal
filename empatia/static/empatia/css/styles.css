@@ -411,3 +411,14 @@ button:focus {
 main {
     flex: 1;
 }
+
+#privacy-warning{
+    background: #56c0e9;
+    color: #051012;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ffeeba;
+    display: block;
+}
+
