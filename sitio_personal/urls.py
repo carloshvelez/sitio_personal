@@ -22,10 +22,11 @@ from markdownx import urls as markdownx_urls
 
 
 urlpatterns = [
-    path('', include('mi_sitio.urls')),
+    path('', include('mi_sitio.urls', namespace='mi_sitio')),
     path('empatia/', include('empatia.urls')),
     path('admin/', admin.site.urls),
-    path('markdownx/', include(markdownx_urls)), 
+    path('markdownx/', include(markdownx_urls)),   
+    path('dashboard/', include('dashboard.urls'))
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

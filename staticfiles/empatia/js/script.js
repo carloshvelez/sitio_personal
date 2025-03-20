@@ -66,7 +66,12 @@ function updateProviderSection() {
     document.querySelectorAll('.config-section').forEach(el => {
         el.classList.remove('visible');
     });
-    document.getElementById(`${provider}-config`).classList.add('visible');
+    const configSection = document.getElementById(`${provider}-config`);
+    if (configSection) {
+        configSection.classList.add('visible');
+    } else {
+        console.error(`Configuration section for provider ${provider} not found`);
+    }
 }
 
 function saveConfig() {

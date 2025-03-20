@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Práctica de Entrevista Motivacional</title>
+  <style>
+    :root {
+      --primary: #4e54c8;
+      --primary-light: #8b94f7;
+      --secondary: #ff6b6b;
+      --accent: #feca57;
+      --text: #2d3436;
+      --light: #f9f9f9;
+      --dark: #2d3436;
+      --success: #1dd1a1;
+      --error: #ff6b6b;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .tabs {
+      display: flex;
+      background-color: #f1f2f6;
+      flex-wrap: wrap;
+    }
+    
+    .tab {
+      flex: 1;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      color: var(--dark);
+      border-bottom: 3px solid transparent;
+      min-width: 150px;
+    }
+    
+    .tab.active {
+      background-color: white;
+      border-bottom: 3px solid var(--secondary);
+      color: var(--primary);
+    }
+    
+    .tab:hover:not(.active) {
+      background-color: #e6e9ed;
+    }
+    
+    .content {
+      padding: 20px;
+    }
+    
+    .strategy {
+      display: none;
+    }
+    
+    .strategy.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    h2 {
+      margin-bottom: 20px;
+      color: var(--primary);
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    #footer{
+      color: #777;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(78, 84, 200, 0.2);
+    }
+    
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    /* Estilos para la estrategia 1 */
+    .question-card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .quote {
+      font-style: italic;
+      font-size: 18px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-left: 4px solid var(--primary);
+    }
+    
+    .options {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    
+    .option-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .option-btn:first-child {
+      background-color: #e3f2fd;
+      color: #1565c0;
+    }
+    
+    .option-btn:last-child {
+      background-color: #fbe9e7;
+      color: #d84315;
+    }
+    
+    .option-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .option-btn.selected {
+      transform: scale(0.98);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .option-btn.correct {
+      background-color: var(--success);
+      color: white;
+    }
+    
+    .option-btn.incorrect {
+      background-color: var(--error);
+      color: white;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    
+    .control-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: var(--primary);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .control-btn:hover {
+      background-color: var(--primary-light);
+    }
+    
+    .control-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    
+    .feedback {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+    
+    /* Estilos para la estrategia 2 */
+    .decision-matrix {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    
+    .decision-matrix th {
+      background: var(--primary);
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    
+    .decision-matrix th:first-child {
+      background: #c3cfe2;
+      color: var(--dark);
+    }
+    
+    .decision-matrix td {
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      height: 100px;
+      vertical-align: top;
+    }
+    
+    .decision-matrix td:first-child {
+      font-weight: bold;
+      background-color: #e6e9ed;
+    }
+    
+    .decision-matrix textarea {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: transparent;
+      resize: none;
+      padding: 5px;
+    }
+    
+    .decision-matrix textarea:focus {
+      outline: 2px solid var(--primary-light);
+    }
+    
+    /* Estilos para la estrategia 3 */
+    .slider-container {
+      margin: 30px 0;
+    }
+    
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .slider-title {
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    .slider-value {
+      font-weight: bold;
+      color: var(--secondary);
+    }
+    
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 10px;
+      border-radius: 5px;
+      background: #ddd;
+      outline: none;
+    }
+    
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .slider::-webkit-slider-thumb:hover {
+      background: var(--primary-light);
+      transform: scale(1.1);
+    }
+    
+    .importance-slider::-webkit-slider-runnable-track {
+      background: linear-gradient(90deg, #ff6b6b 0%, #feca57 50%, #1dd1a1 100%);
+    }
+    
+    .confidence-slider::-webkit-slider-runnable-track {
+      background: linear-gradient(90deg, #ff6b6b 0%, #feca57 50%, #1dd1a1 100%);
+    }
+    
+    .scale-description {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #777;
+    }
+    
+    .interpretation {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      border-left: 4px solid var(--primary);
+    }
+    
+    .results {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+    }
+    
+    .result-card {
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      width: 45%;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .result-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+    
+    .result-value {
+      font-size: 36px;
+      font-weight: bold;
+    }
+    
+    .importance-value {
+      color: var(--secondary);
+    }
+    
+    .confidence-value {
+      color: var(--accent);
+    }
+    
+    .response-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .response-group {
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 15px;
+    }
+    
+    .response-header {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+    
+    @media (max-width: 768px) {
+      .tabs {
+        flex-direction: column;
+      }
+      
+      .options {
+        flex-direction: column;
+      }
+      
+      .result-card {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+      
+      .results {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Herramientas Motivacionales</h1>
+      <p>Consumo de Sustancias Psicoactivas en Adolescentes</p>
+      <p>Fundación Universitaria Konrad Lorenz</p>
+    </header>
+    
+    <div class="tabs">
+      <div class="tab active" data-strategy="0">Identificación de Conducta</div>
+      <div class="tab" data-strategy="1">Clasificación de Verbalizaciones</div>
+      <div class="tab" data-strategy="2">Diálogo Interior</div>
+      <div class="tab" data-strategy="3">Balance Decisional</div>
+      <div class="tab" data-strategy="4">Establecimiento de Meta</div>
+      <div class="tab" data-strategy="5">Escalas de Importancia y Seguridad</div>
+    </div>
+    
+    <div class="content">
+      <!-- Estrategia 0: Identificación de Conducta -->
+      <div class="strategy active" id="strategy0">
+        <h2>Identificación de Conducta</h2>
+        <p>Para comenzar, identifica una conducta específica sobre la cual te gustaría reflexionar o posiblemente cambiar.</p>
+        
+        <div class="card">
+          <div class="form-group">
+            <label for="target-behavior">¿Qué conducta específica te gustaría cambiar?</label>
+            <input type="text" id="target-behavior" placeholder="Ej: Consumo de alcohol, tiempo en redes sociales, etc." />
+          </div>
+          
+          <div class="form-group">
+            <label for="behavior-description">Describe brevemente esta conducta (frecuencia, cantidad, contexto)</label>
+            <textarea id="behavior-description" placeholder="Ej: Consumo alcohol todos los fines de semana, aproximadamente 4-5 cervezas cada noche."></textarea>
+          </div>
+          
+          <p id="behavior-summary-container" style="display: none;">
+            <strong>Conducta identificada:</strong> <span id="behavior-summary"></span>
+          </p>
+          
+          <div class="controls">
+            <button class="control-btn" id="save-behavior">Guardar y Continuar</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Estrategia 1: Clasificación de Verbalizaciones -->
+      <div class="strategy" id="strategy1">
+        <h2>Clasificación de Verbalizaciones</h2>
+        <p>Identifica si las siguientes verbalizaciones son posicionales (mantener el consumo) o motivacionales (cambiar):</p>
+        
+        <div class="question-card">
+          <div class="quote" id="current-quote"></div>
+          <div class="options">
+            <button class="option-btn" data-type="motivacional">Motivacional</button>
+            <button class="option-btn" data-type="posicional">Posicional</button>
+          </div>
+          <div class="feedback" id="feedback"></div>
+          <div class="controls">
+            <button class="control-btn" id="prev-btn" disabled>Anterior</button>
+            <button class="control-btn" id="next-btn">Siguiente</button>
+          </div>
+        </div>
+        
+        <div id="progress">
+          <p>Pregunta <span id="current-question">1</span> de <span id="total-questions">7</span></p>
+        </div>
+      </div>
+      
+      <!-- Estrategia 2: Diálogo Interior -->
+      <div class="strategy" id="strategy2">
+        <h2>Diálogo Interior</h2>
+        <p>Registra tu diálogo interior respecto a la conducta que identificaste: <span class="behavior-display">______</span></p>
+        
+        <div class="card">
+          <div class="response-container">
+            <div class="response-group">
+              <div class="response-header">Respuestas Motivacionales (a favor del cambio)</div>
+              <div class="form-group">
+                <label for="change-response1">Respuesta 1:</label>
+                <input type="text" id="change-response1" placeholder="Ejemplo: Me sentiría mejor conmigo mismo si redujera esta conducta." />
+              </div>
+              <div class="form-group">
+                <label for="change-response2">Respuesta 2:</label>
+                <input type="text" id="change-response2" placeholder="Ejemplo: Tendría más tiempo para otras actividades que disfruto." />
+              </div>
+            </div>
+            
+            <div class="response-group">
+              <div class="response-header">Respuestas Posicionales (a favor de mantener la conducta)</div>
+              <div class="form-group">
+                <label for="maintain-response1">Respuesta 1:</label>
+                <input type="text" id="maintain-response1" placeholder="Ejemplo: No creo que sea tan grave como para cambiarla." />
+              </div>
+              <div class="form-group">
+                <label for="maintain-response2">Respuesta 2:</label>
+                <input type="text" id="maintain-response2" placeholder="Ejemplo: Me relaja y me ayuda a lidiar con el estrés." />
+              </div>
+            </div>
+          </div>
+          
+          <div class="controls">
+            <button class="control-btn" id="save-responses">Guardar Respuestas</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Estrategia 3: Balance Decisional -->
+      <div class="strategy" id="strategy3">
+        <h2>Balance Decisional</h2>
+        <p>Rellena la matriz con los costos y beneficios de mantener o cambiar la conducta: <span class="behavior-display">______</span></p>
+        
+        <table class="decision-matrix">
+          <tr>
+            <th></th>
+            <th>Cambiar la conducta</th>
+            <th>Mantener la conducta</th>
+          </tr>
+          <tr>
+            <td>Costos</td>
+            <td><textarea placeholder="¿Qué costos tendría cambiar esta conducta?"></textarea></td>
+            <td><textarea placeholder="¿Qué costos tiene mantener esta conducta?"></textarea></td>
+          </tr>
+          <tr>
+            <td>Beneficios</td>
+            <td><textarea placeholder="¿Qué beneficios tendría cambiar esta conducta?"></textarea></td>
+            <td><textarea placeholder="¿Qué beneficios tiene mantener esta conducta?"></textarea></td>
+          </tr>
+        </table>
+        
+        <div class="controls" style="margin-top: 20px;">
+          <button class="control-btn" id="reset-matrix">Reiniciar Matriz</button>
+          <button class="control-btn" id="save-matrix">Guardar Balance</button>
+        </div>
+      </div>
+      
+      <!-- Estrategia 4: Establecimiento de Meta -->
+      <div class="strategy" id="strategy4">
+        <h2>Establecimiento de Meta</h2>
+        <p>Establece una meta clara, específica y medible respecto a la conducta que identificaste: <span class="behavior-display">______</span></p>
+        
+        <div class="card">
+          <div class="form-group">
+            <label for="goal-type">Tipo de Meta:</label>
+            <select id="goal-type" class="form-control">
+              <option value="reduction">Reducción de la conducta</option>
+              <option value="cessation">Abandono de la conducta</option>
+              <option value="modification">Modificación de la conducta</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="specific-goal">Meta Específica:</label>
+            <input type="text" id="specific-goal" placeholder="Ej: Reducir mi consumo de alcohol a máximo 2 cervezas por ocasión" />
+          </div>
+          
+          <div class="form-group">
+            <label for="measurable-criteria">¿Cómo medirás el progreso?</label>
+            <input type="text" id="measurable-criteria" placeholder="Ej: Llevaré un registro diario de cuántas cervezas consumo" />
+          </div>
+          
+          <div class="form-group">
+            <label for="goal-timeframe">Marco de Tiempo:</label>
+            <input type="text" id="goal-timeframe" placeholder="Ej: Durante las próximas 4 semanas" />
+          </div>
+          
+          <p id="goal-summary-container" style="display: none;">
+            <strong>Meta establecida:</strong> <span id="goal-summary"></span>
+          </p>
+          
+          <div class="controls">
+            <button class="control-btn" id="save-goal">Guardar Meta</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Estrategia 5: Escalas de Importancia y Seguridad -->
+      <div class="strategy" id="strategy5">
+        <h2>Escalas de Importancia y Seguridad</h2>
+        <p>Respecto a tu meta: <span id="goal-display">______</span></p>
+        
+        <div class="slider-container">
+          <div class="slider-label">
+            <span class="slider-title">¿Qué tan importante es para ti lograr esta meta?</span>
+            <span class="slider-value" id="importance-value">5</span>
+          </div>
+          <input type="range" min="0" max="10" value="5" class="slider importance-slider" id="importance">
+          <div class="scale-description">
+            <span>Nada importante</span>
+            <span>Extremadamente importante</span>
+          </div>
+        </div>
+        
+        <div class="slider-container">
+          <div class="slider-label">
+            <span class="slider-title">¿Qué tan seguro te sientes de poder lograr esta meta?</span>
+            <span class="slider-value" id="confidence-value">5</span>
+          </div>
+          <input type="range" min="0" max="10" value="5" class="slider confidence-slider" id="confidence">
+          <div class="scale-description">
+            <span>Nada seguro</span>
+            <span>Totalmente seguro</span>
+          </div>
+        </div>
+        
+        <div class="results">
+          <div class="result-card">
+            <div class="result-title">Importancia</div>
+            <div class="result-value importance-value" id="importance-result">5</div>
+          </div>
+          <div class="result-card">
+            <div class="result-title">Seguridad</div>
+            <div class="result-value confidence-value" id="confidence-result">5</div>
+          </div>
+        </div>
+        
+        <div class="interpretation" id="interpretation">
+          <p><strong>Interpretación:</strong> Tu nivel de importancia y seguridad está en un punto medio. Cuando ambos factores son elevados, hay mayor probabilidad de éxito en el cambio.</p>
+        </div>        
+      </div>
+      
+      
+    </div>
+    
+  </div>
+ 
+  <footer id="footer">
+    <p>Creado con ayuda de <a href="https://claude.ai" target="_blank">Claude IA </a></p>
+  </footer>
+
+  <script>
+    // Variables globales
+    let targetBehavior = "";
+    let userGoal = "";
+    
+    // Datos para la estrategia 1
+    const verbalizaciones = [
+      {
+        texto: "No quiero que mi hermano siga mi mal ejemplo",
+        tipo: "motivacional"
+      },
+      {
+        texto: "No me importa lo que el mundo piense, simplemente me gusta consumir.",
+        tipo: "posicional"
+      },
+      {
+        texto: "Gracias a la marihuana soy más creativo",
+        tipo: "posicional"
+      },
+      {
+        texto: "A veces sí siento que me duele mucho la nariz después de \"Güeler\"",
+        tipo: "motivacional"
+      },
+      {
+        texto: "Me gustaría que me fuera bien otra vez en el colegio",
+        tipo: "motivacional"
+      },
+      {
+        texto: "Le voy a pedir a mi mamá que me despierte más temprano para hacer ejercicio",
+        tipo: "motivacional"
+      },
+      {
+        texto: "Todos consumen ¿Por qué yo no?",
+        tipo: "posicional"
+      }
+    ];
+    
+    // Control de tabs
+    const tabs = document.querySelectorAll('.tab');
+    const strategies = document.querySelectorAll('.strategy');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const strategyNum = tab.getAttribute('data-strategy');
+        
+        // Actualizar tabs
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        // Actualizar contenido
+        strategies.forEach(s => s.classList.remove('active'));
+        document.getElementById(`strategy${strategyNum}`).classList.add('active');
+      });
+    });
+    
+    // Estrategia 0: Identificación de Conducta
+    const saveBehaviorBtn = document.getElementById('save-behavior');
+    const behaviorInput = document.getElementById('target-behavior');
+    const behaviorDescription = document.getElementById('behavior-description');
+    const behaviorSummary = document.getElementById('behavior-summary');
+    const behaviorSummaryContainer = document.getElementById('behavior-summary-container');
+    const behaviorDisplayElements = document.querySelectorAll('.behavior-display');
+    
+    saveBehaviorBtn.addEventListener('click', () => {
+      if (behaviorInput.value.trim() === '') {
+        alert('Por favor, identifica una conducta específica.');
+        return;
+      }
+      
+      targetBehavior = behaviorInput.value;
+      const description = behaviorDescription.value || '(Sin descripción detallada)';
+      
+      // Actualizar resumen
+      behaviorSummary.textContent = `${targetBehavior} - ${description}`;
+      behaviorSummaryContainer.style.display = 'block';
+      
+      // Actualizar todos los lugares donde se muestra la conducta
+      behaviorDisplayElements.forEach(el => {
+        el.textContent = targetBehavior;
+      });
+      
+      // Ir a la siguiente pestaña automáticamente
+      tabs[1].click();
+    });
+    
+    // Estrategia 1: Clasificación de verbalizaciones
+    let currentQuestionIndex = 0;
+    const currentQuote = document.getElementById('current-quote');
+    const optionButtons = document.querySelectorAll('.option-btn');
+    const feedbackEl = document.getElementById('feedback');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const currentQuestionEl = document.getElementById('current-question');
+    const totalQuestionsEl = document.getElementById('total-questions');
+    
+    totalQuestionsEl.textContent = verbalizaciones.length;
+    
+    function showQuestion(index) {
+      currentQuote.textContent = verbalizaciones[index].texto;
+      currentQuestionEl.textContent = index + 1;
+      feedbackEl.textContent = '';
+      
+      // Reiniciar botones
+      optionButtons.forEach(btn => {
+        btn.classList.remove('selected', 'correct', 'incorrect');
+      });
+      
+      // Controlar botones de navegación
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === verbalizaciones.length - 1;
+    }
+    
+    optionButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const selectedType = btn.getAttribute('data-type');
+        const correctType = verbalizaciones[currentQuestionIndex].tipo;
+        
+        // Marcar como seleccionado
+        optionButtons.forEach(b => b.classList.remove('selected', 'correct', 'incorrect'));
+        btn.classList.add('selected');
+        
+        // Mostrar feedback
+        if (selectedType === correctType) {
+          btn.classList.add('correct');
+          feedbackEl.textContent = '¡Correcto!';
+          feedbackEl.style.color = 'var(--success)';
+        } else {
+          btn.classList.add('incorrect');
+          feedbackEl.textContent = `Incorrecto. Esta verbalización es ${correctType}.`;
+          feedbackEl.style.color = 'var(--error)';
+          
+          // Marcar la opción correcta
+          optionButtons.forEach(b => {
+            if (b.getAttribute('data-type') === correctType) {
+              b.classList.add('correct');
+            }
+          });
+        }
+      });
+    });
+    
+    prevBtn.addEventListener('click', () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        showQuestion(currentQuestionIndex);
+      }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+      if (currentQuestionIndex < verbalizaciones.length - 1) {
+        currentQuestionIndex++;
+        showQuestion(currentQuestionIndex);
+      }
+    });
+    
+    // Inicializar primera pregunta
+    showQuestion(currentQuestionIndex);
+    
+    // Estrategia 2: Diálogo Interior
+    const saveResponsesBtn = document.getElementById('save-responses');
+    const changeResponse1 = document.getElementById('change-response1');
+    const changeResponse2 = document.getElementById('change-response2');
+    const maintainResponse1 = document.getElementById('maintain-response1');
+    const maintainResponse2 = document.getElementById('maintain-response2');
+    
+    saveResponsesBtn.addEventListener('click', () => {
+      if (changeResponse1.value.trim() === '' || changeResponse2.value.trim() === '' || 
+          maintainResponse1.value.trim() === '' || maintainResponse2.value.trim() === '') {
+        alert('Por favor, completa todas las respuestas.');
+        return;
+      }
+      
+      alert('Respuestas guardadas correctamente.');
+      // Ir a la siguiente pestaña
+      tabs[3].click();
+    });
+    
+    // Estrategia 3: Balance decisional
+    const resetMatrixBtn = document.getElementById('reset-matrix');
+    const saveMatrixBtn = document.getElementById('save-matrix');
+    const textareas = document.querySelectorAll('.decision-matrix textarea');
+    
+    resetMatrixBtn.addEventListener('click', () => {
+      textareas.forEach(textarea => {
+        textarea.value = '';
+      });
+    });
+    
+    saveMatrixBtn.addEventListener('click', () => {
+      alert('Balance decisional guardado correctamente.');
+      // Ir a la siguiente pestaña
+      tabs[4].click();
+    });
+    
+    // Estrategia 4: Establecimiento de Meta
+    const saveGoalBtn = document.getElementById('save-goal');
+    const goalTypeSelect = document.getElementById('goal-type');
+    const specificGoalInput = document.getElementById('specific-goal');
+    const measurableCriteriaInput = document.getElementById('measurable-criteria');
+    const goalTimeframeInput = document.getElementById('goal-timeframe');
+    const goalSummary = document.getElementById('goal-summary');
+    const goalSummaryContainer = document.getElementById('goal-summary-container');
+    const goalDisplayElement = document.getElementById('goal-display');
+    
+    saveGoalBtn.addEventListener('click', () => {
+      if (specificGoalInput.value.trim() === '') {
+        alert('Por favor, establece una meta específica.');
+        return;
+      }
+      
+      const goalType = goalTypeSelect.value;
+      const specificGoal = specificGoalInput.value;
+      const measurableCriteria = measurableCriteriaInput.value || '(Sin criterios de medición)';
+      const timeframe = goalTimeframeInput.value || '(Sin marco de tiempo definido)';
+      
+      // Crear resumen de la meta
+      userGoal = specificGoal;
+      const goalSummaryText = `${specificGoal}. Medición: ${measurableCriteria}. Tiempo: ${timeframe}`;
+      
+      // Actualizar elementos
+      goalSummary.textContent = goalSummaryText;
+      goalSummaryContainer.style.display = 'block';
+      goalDisplayElement.textContent = specificGoal;
+      
+      // Ir a la siguiente pestaña
+      tabs[5].click();
+    });
+    
+    // Estrategia 5: Escalas de Importancia y Seguridad
+    const importanceSlider = document.getElementById('importance');
+    const confidenceSlider = document.getElementById('confidence');
+    const importanceValue = document.getElementById('importance-value');
+    const confidenceValue = document.getElementById('confidence-value');
+    const importanceResult = document.getElementById('importance-result');
+    const confidenceResult = document.getElementById('confidence-result');
+    const interpretationEl = document.getElementById('interpretation');
+    
+    function updateInterpretation() {
+      const importance = parseInt(importanceSlider.value);
+      const confidence = parseInt(confidenceSlider.value);
+      
+      importanceValue.textContent = importance;
+      confidenceValue.textContent = confidence;
+      importanceResult.textContent = importance;
+      confidenceResult.textContent = confidence;
+      
+      let interpretation = '';
+      
+      if (importance >= 7 && confidence >= 7) {
+        interpretation = 'Asignas alta importancia y tienes seguridad. ¿Por qué no están más bajitas... por ejemplo, por debajo de 7?';
+      } else if (importance >= 7 && confidence < 7) {
+        interpretation = 'El cambio es importante para ti ¿Por qué no está más abajo? La confianza está un poco más baja ¿Por qué no está aún  más abajo?';
+      } else if (importance < 7 && confidence >= 7) {
+        interpretation = 'Parece que te sientes capaz de cambiar ¿por qué no respondiste por debajo de 7 esta medida?, la importancia está un poco más baja ¿Por qué no está aún más abajo?.';
+      } else {
+        interpretation = '¿Por qué no marcaste menor seguridad e importancia?.';
+      }
+      
+      interpretationEl.innerHTML = `<p><strong>Interpretación:</strong> ${interpretation}</p>`;
+    }
+    
+    importanceSlider.addEventListener('input', updateInterpretation);
+    confidenceSlider.addEventListener('input', updateInterpretation);
+    
+    // Inicializar la interpretación
+    updateInterpretation();
+  </script>
+</body>
+</html>

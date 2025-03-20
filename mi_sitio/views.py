@@ -34,3 +34,6 @@ def blog(request):
         'page_obj': page_obj
     }
     return render(request, 'mi_sitio/blog.html', context)
+
+def em(request):
+    return render(request,'mi_sitio/em.html')
