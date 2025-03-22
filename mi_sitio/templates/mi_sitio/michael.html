@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Michael Scott Bot</title>
+  <style>
+    :root {
+      --primary: #4e54c8;
+      --primary-light: #8b94f7;
+      --secondary: #ff6b6b;
+      --accent: #feca57;
+      --text: #2d3436;
+      --light: #f9f9f9;
+      --dark: #2d3436;
+      --success: #1dd1a1;
+      --error: #ff6b6b;
+      --dunder-mifflin: #0151a8;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 90vh;
+    }
+    
+    header {
+      background: var(--dunder-mifflin);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    header img {
+      height: 60px;
+      margin-right: 15px;
+    }
+    
+    h1 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+    
+    .chat-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 20px 20px 70px; /* Aumentado el padding izquierdo para dar espacio al avatar */
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .message {
+      max-width: 80%;
+      margin-bottom: 15px;
+      padding: 12px 15px;
+      border-radius: 15px;
+      position: relative;
+      line-height: 1.5;
+    }
+    
+    .user-message {
+      align-self: flex-end;
+      background-color: var(--primary-light);
+      color: white;
+      border-bottom-right-radius: 5px;
+    }
+    
+    .bot-message {
+      align-self: flex-start;
+      background-color: #f1f2f6;
+      color: var(--text);
+      border-bottom-left-radius: 5px;
+      margin-left: 40px; /* Añadido margen izquierdo para dar espacio al avatar */
+    }
+    
+    .bot-message.thinking {
+      background-color: #f1f2f6;
+      color: #888;
+    }
+    
+    .bot-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      position: absolute;
+      bottom: -5px;
+      left: -50px; /* Mantenemos esta posición pero ahora tendrá espacio suficiente */
+      border: 2px solid white;
+    }
+    
+    .input-container {
+      display: flex;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-top: 1px solid #eee;
+    }
+    
+    #user-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      font-size: 16px;
+      outline: none;
+    }
+    
+    #user-input:focus {
+      border-color: var(--primary);
+    }
+    
+    #send-button {
+      background-color: var(--dunder-mifflin);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 12px 20px;
+      margin-left: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    
+    #send-button:hover {
+      background-color: #0066cc;
+    }
+    
+    .quote {
+      font-style: italic;
+      margin-top: 5px;
+      color: #666;
+    }
+    
+    #footer {
+      color: #777;
+      text-align: center;
+      margin-top: 10px;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        height: 85vh;
+      }
+      
+      .message {
+        max-width: 90%;
+      }
+      
+      .bot-avatar {
+        width: 30px;
+        height: 30px;
+        left: -40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Dunder_Mifflin%2C_Inc.svg" alt="Dunder Mifflin Logo">
+      <div>
+        <h1>Michael Scott Bot</h1>
+        <p>Gerente regional, Dunder Mifflin Scranton</p>
+      </div>
+    </header>
+    
+    <div class="chat-container" id="chat-container">
+      <div class="message bot-message">
+        <img src="https://upload.wikimedia.org/wikipedia/en/d/dc/MichaelScott.png" alt="Michael Scott" class="bot-avatar">
+        ¡Eso dijo ella! ¡Hey, soy Michael Scott, el mejor jefe del mundo! ¿Qué pasa, muchachos? ¿Necesitan liderazgo... o solo alguien que haga chistes incómodos? ¡Porque puedo hacer ambas! 😎
+      </div>
+    </div>
+    
+    <div class="input-container">
+      <input type="text" id="user-input" placeholder="Pregúntale a Michael..." autocomplete="off">
+      <button id="send-button">Enviar</button>
+    </div>
+  </div>
+  
+  <footer id="footer">
+    <p>Desarrollado con la ayuda de Claude AI. Personaje de Michael interpretado por DeepSeek AI</p>
+  </footer>
+
+  <script>
+    const chatContainer = document.getElementById('chat-container');
+    const userInput = document.getElementById('user-input');
+    const sendButton = document.getElementById('send-button');
+    
+    // Michael Scott quotes for fallback
+    const michaelQuotes = [
+      "¡Eso es lo que ella dijo!",
+      "No soy supersticioso, pero soy un poco sticioso.",
+      "¿Prefiero ser temido o amado? Fácil. Ambos. Quiero que la gente tema lo mucho que me ama.",
+      "Soy un madrugador y un noctámbulo. Así que soy sabio y tengo lombrices.",
+      "¡No voy a ser derribado por una chica de 30 años que ni siquiera pesa 45 kilos!",
+      "Me encantan los chistes internos. Me encantaría ser parte de uno algún día.",
+      "A veces empiezo una frase y ni siquiera sé a dónde va. Solo espero encontrarla en el camino.",
+      "Ya sabes lo que dicen. Engáñame una vez, strike uno. Engáñame dos veces... strike tres.",
+      "Sabía exactamente qué hacer. Pero en un sentido mucho más real, no tenía idea de qué hacer.",
+      "Normalmente no soy el trasero del chiste. Normalmente soy la cara del chiste.",
+      "Siento que todos mis hijos crecieron y luego se casaron entre ellos. ¡Es el sueño de todo padre!",
+      "¿Necesito ser querido? Absolutamente no. Me gusta ser querido. Disfruto ser querido. Tengo que ser querido. Pero no es como esta necesidad compulsiva como mi necesidad de ser elogiado.",
+      "Wikipedia es lo mejor que existe. Cualquiera en el mundo puede escribir cualquier cosa sobre cualquier tema, así que sabes que estás obteniendo la mejor información posible.",
+      "No me conoces, solo has visto mi pene.",
+      "Lo peor de la prisión fueron los Dementores.",
+      "Adivina qué, tengo defectos. ¿Cuáles son? Oh, no lo sé. Canto en la ducha. A veces paso demasiado tiempo haciendo voluntariado. Ocasionalmente atropello a alguien con mi auto. Así que demándame.",
+      "Si tuviera una pistola con dos balas y estuviera en una habitación con Hitler, Bin Laden y Toby, le dispararía a Toby dos veces.",
+      "Soy Beyoncé, siempre."
+    ];
+    
+    // Function to add a message to the chat
+    function addMessage(text, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message');
+      
+      if (isUser) {
+        messageDiv.classList.add('user-message');
+        messageDiv.textContent = text;
+      } else {
+        messageDiv.classList.add('bot-message');
+        
+        const avatar = document.createElement('img');
+        avatar.src = 'https://upload.wikimedia.org/wikipedia/en/d/dc/MichaelScott.png';
+        avatar.alt = 'Michael Scott';
+        avatar.classList.add('bot-avatar');
+        
+        messageDiv.appendChild(avatar);
+        messageDiv.textContent = text;
+      }
+      
+      chatContainer.appendChild(messageDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+      return messageDiv;
+    }
+    
+    // Function to add a thinking message
+    function addThinkingMessage() {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message', 'bot-message', 'thinking');
+      
+      const avatar = document.createElement('img');
+      avatar.src = 'https://upload.wikimedia.org/wikipedia/en/d/dc/MichaelScott.png';
+      avatar.alt = 'Michael Scott';
+      avatar.classList.add('bot-avatar');
+      
+      messageDiv.appendChild(avatar);
+      messageDiv.textContent = "Thinking...";
+      
+      chatContainer.appendChild(messageDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+      return messageDiv;
+    }
+    
+    // Function to get response from the DeepSeek API
+    async function getMichaelResponse(userMessage) {
+      try {
+        const response = await fetch('/michael_response/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message: userMessage }),
+        });
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        return data.response;
+      } catch (error) {
+        console.error('Error:', error);
+        // Fallback to a random Michael Scott quote
+        return michaelQuotes[Math.floor(Math.random() * michaelQuotes.length)];
+      }
+    }
+    
+    // Function to handle sending a message
+    async function sendMessage() {
+      const message = userInput.value.trim();
+      if (message === '') return;
+      
+      // Add user message to chat
+      addMessage(message, true);
+      
+      // Clear input
+      userInput.value = '';
+      
+      // Add thinking message
+      const thinkingMessage = addThinkingMessage();
+      
+      // Get response from API
+      const response = await getMichaelResponse(message);
+      
+      // Replace thinking message with actual response
+      thinkingMessage.textContent = response;
+      thinkingMessage.classList.remove('thinking');
+    }
+    
+    // Event listeners
+    sendButton.addEventListener('click', sendMessage);
+    
+    userInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+    
+    // Focus input on page load
+    userInput.focus();
+  </script>
+</body>
+</html>
