@@ -5,10 +5,10 @@ from django.core.paginator import Paginator
 import json
 import requests
 import os
-from dotenv import load_dotenv
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
+from decouple import config
 
 # Create your views here.
 def index(request):
@@ -77,12 +77,13 @@ def michael_response(request):
     return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
 
 # Load environment variables from .env file
-load_dotenv()
+
 
 def get_deepseek_response(prompt):
     """Function to call DeepSeek API"""
     # Get API key from environment variables
-    api_key = os.environ.get('DEEPSEEK_API_KEY')
+  
+    api_key = config('DEEPSEEK_API_KEY', default=False)
     
     if not api_key:
         print("Warning: DEEPSEEK_API_KEY not found in environment variables")
