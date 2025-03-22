@@ -86,7 +86,8 @@ def get_deepseek_response(prompt):
     
     if not api_key:
         print("Warning: DEEPSEEK_API_KEY not found in environment variables")
-        # Fallback or raise an error as appropriate
+        # Proporcionar una respuesta de fallback en lugar de fallar
+        return "¡Eso es lo que ella dijo! Parece que estoy teniendo problemas técnicos. Intenta más tarde."
     
     # API endpoint
     api_url = "https://api.deepseek.com/v1/chat/completions"
