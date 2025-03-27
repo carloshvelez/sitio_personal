@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario ASSIST Young (15-17 años)</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px; /* Aumentado ligeramente */
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #0056b3; /* Azul oscuro */
+            margin-bottom: 1em;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+        }
+        .intro-text, .prescription-note {
+            background-color: #eef;
+            padding: 15px;
+            border-left: 5px solid #aac;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+        .question-group {
+            background-color: #f1f3f5;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 5px;
+        }
+        .question-group h3 {
+            margin-top: 0;
+            font-size: 1.1em;
+            color: #004085;
+            border-bottom: 1px solid #ced4da;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+        .question-instruction {
+             font-size: 0.9em;
+             color: #555;
+             margin-bottom: 10px;
+             font-style: italic; /* Italicize instruction */
+         }
+
+        /* --- Card Styles (Response and Substance) --- */
+        .response-card, .substance-card {
+            background-color: #dbe4ff; /* Light blue background */
+            border: 1px solid #a3b9e8;
+            border-radius: 4px;
+            padding: 15px; /* Increased padding */
+            margin-bottom: 15px; /* Increased margin */
+            color: #003366; /* Darker blue text */
+        }
+        .card-title {
+            font-size: 1em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #a3b9e8;
+            color: #00274d;
+        }
+        .response-options-grid { /* The grid containing option blocks */
+             display: grid;
+             gap: 5px 10px;
+             text-align: center;
+             font-size: 0.85em;
+        }
+        .response-option-block { /* Container for option + explanation */
+            padding: 5px;
+        }
+        .response-option-block .option-text {
+             font-weight: bold;
+             display: block; /* Ensure it's on its own line */
+             margin-bottom: 3px;
+        }
+        .response-option-block .card-explanation {
+            font-size: 0.9em;
+            font-weight: normal;
+            color: #334d66;
+             display: block;
+        }
+        .response-card .card-placeholder { /* Empty span for alignment */
+             visibility: hidden;
+        }
+         /* Specific grids for cards */
+        .card-grid-q2-5 { grid-template-columns: minmax(200px, 1fr) repeat(5, minmax(60px, 1fr)); }
+        .card-grid-q6-7 { grid-template-columns: minmax(200px, 1fr) repeat(3, minmax(100px, 1fr)); }
+
+         /* Substance Card Specific Styles */
+         .substance-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            column-count: 2; /* Display in two columns */
+            column-gap: 20px;
+         }
+         .substance-card li {
+             margin-bottom: 8px;
+             font-size: 0.9em;
+             break-inside: avoid-column; /* Prevent items breaking across columns */
+         }
+         .substance-card strong {
+            color: #00274d;
+         }
+         .substance-card .substance-examples-card {
+             font-size: 0.9em;
+             color: #334d66;
+         }
+        /* --- End Card Styles --- */
+
+        .substance-row {
+            display: grid;
+            gap: 5px 10px;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e9ecef;
+            font-size: 0.95em;
+        }
+         .substance-row.header {
+            font-weight: bold;
+            background-color: #e9ecef;
+            padding: 10px 0;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 0.9em;
+            margin-top: 0; /* Remove margin if response card is above */
+         }
+         .substance-row.header span:first-child {
+            text-align: left;
+            padding-left: 5px;
+         }
+         /* Grid specific columns */
+         .grid-q1 { grid-template-columns: minmax(200px, 1fr) 60px 60px; }
+         .grid-q2 { grid-template-columns: minmax(200px, 1fr) repeat(5, minmax(60px, 1fr)); }
+         .grid-q3 { grid-template-columns: minmax(200px, 1fr) repeat(5, minmax(60px, 1fr)); }
+         .grid-q4 { grid-template-columns: minmax(200px, 1fr) repeat(5, minmax(60px, 1fr)); }
+         .grid-q5 { grid-template-columns: minmax(200px, 1fr) repeat(5, minmax(60px, 1fr)); }
+         .grid-q6 { grid-template-columns: minmax(200px, 1fr) repeat(3, minmax(100px, 1fr)); }
+
+        .substance-label {
+            font-weight: bold;
+        }
+        .substance-examples {
+            font-size: 0.85em;
+            color: #555;
+            display: block;
+        }
+        .radio-group {
+            text-align: center;
+        }
+        input[type="radio"] {
+            margin: 0;
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+        .q7-options label {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        .q5-na {
+             grid-column: span 5;
+             text-align: center;
+             color: #6c757d;
+             font-style: italic;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #results, #feedbackCard {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e7f1ff;
+            border: 1px solid #b8daff;
+            border-radius: 5px;
+        }
+        #feedbackCard {
+             background-color: #ffffff;
+             border: 1px solid #dee2e6;
+             box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .result-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border-left: 5px solid;
+        }
+        .risk-none {
+            border-left-color: #6c757d;
+            background-color: #f8f9fa;
+        }
+        .risk-low {
+            border-left-color: #28a745;
+            background-color: #e9f7ec;
+        }
+        .risk-moderate {
+            border-left-color: #ffc107;
+            background-color: #fff9e6;
+        }
+        .risk-high {
+            border-left-color: #dc3545;
+            background-color: #fbebec;
+        }
+         .risk-injection {
+            border-left-color: #8b0000;
+            background-color: #f8d7da;
+            color: #721c24;
+            font-weight: bold;
+        }
+        .result-item strong {
+            display: inline-block;
+            min-width: 100px;
+        }
+        .interpretation {
+            font-size: 0.9em;
+            margin-top: 5px;
+            color: #555;
+        }
+        .feedback-title {
+            text-align: center;
+            font-size: 1.3em;
+            color: #0056b3;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+        }
+        .feedback-section {
+            margin-bottom: 20px;
+        }
+        .feedback-section h3 {
+             font-size: 1.1em;
+             color: #004085;
+             margin-bottom: 10px;
+        }
+        .feedback-list {
+             list-style: disc;
+             margin-left: 20px;
+        }
+        .feedback-list li {
+            margin-bottom: 8px;
+        }
+        .feedback-risk-none { color: #343a40; }
+        .feedback-risk-low { color: #155724; }
+        .feedback-risk-moderate { color: #856404; }
+        .feedback-risk-high { color: #721c24; }
+        .feedback-injection { color: #8b0000; font-weight: bold;}
+
+        .hidden { display: none; }
+
+        #q1-no-message, #q2-no-message {
+            background-color: #d1ecf1;
+            border-left: 5px solid #0c5460;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #0c5460;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f1f3f5;
+            border-top: 1px solid #dee2e6;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cuestionario ASSIST YOUNG 15-17</h1>
+
+        <div class="intro-text">
+            <p>Gracias por aceptar esta breve entrevista sobre alcohol, tabaco y otras drogas. Le voy a hacer algunas preguntas sobre su experiencia de consumo de sustancias a lo largo de su vida, así como en los últimos tres meses. Estas sustancias pueden ser fumadas, ingeridas, aspiradas, inhaladas, inyectadas o tomadas en forma de pastillas o píldoras.</p>
+        </div>
+        <div class="prescription-note">
+            <p>Algunas de las sustancias incluidas pueden haber sido recetadas por un médico (p.ej. pastillas adelgazantes, tranquilizantes, o determinados medicamentos para el dolor). Para esta entrevista, no vamos a anotar medicinas que hayan sido consumidas tal como han sido prescritas por su médico. Sin embargo, si ha tomado alguno de estos medicamentos por motivos distintos a los que fueron prescritos o los toma más frecuentemente o en dosis más altas a las prescritas, por favor dígamelo. Si bien estoy interesado en conocer su consumo de diversas drogas, tenga la plena seguridad que esta información será tratada con absoluta confidencialidad.</p>
+        </div>
+
+        <form id="assistForm">
+
+            <!-- Pregunta 1 -->
+            <div class="question-group">
+                <h3>Pregunta 1: A lo largo de su vida, ¿cual de las siguientes sustancias ha consumido alguna vez? (SOLO PARA USOS NO-MÉDICOS) <span class="question-instruction">(Consulta la tarjeta de sustancias si tienes dudas)</span></h3>
+
+                <!-- Tarjeta de Sustancias Q1 -->
+                <div class="substance-card">
+                    <h4 class="card-title">Tarjeta de Sustancias</h4>
+                    <ul>
+                        <li><strong>a. Tabaco:</strong> <span class="substance-examples-card">(cigarrillos, cigarros habanos, tabaco de mascar, pipa, etc.)</span></li>
+                        <li><strong>b. Bebidas alcohólicas:</strong> <span class="substance-examples-card">(cerveza, vino, licores destilados, etc.)</span></li>
+                        <li><strong>c. Cannabis:</strong> <span class="substance-examples-card">(marihuana, hierba, hashish, etc.)</span></li>
+                        <li><strong>d. Cocaína:</strong> <span class="substance-examples-card">(coca, basuco, crack, paco, etc.)</span></li>
+                        <li><strong>e. Anfetaminas u otro tipo de estimulantes:</strong> <span class="substance-examples-card">(speed, éxtasis, píldoras adelgazantes, etc.)</span></li>
+                        <li><strong>f. Inhalantes:</strong> <span class="substance-examples-card">(pegantes, colas, gasolina, solventes, etc.)</span></li>
+                        <li><strong>g. Tranquilizantes o pastillas para dormir:</strong> <span class="substance-examples-card">(Valium/Diazepam, Trankimazin/Alprazolam/Xanax, Orfidal/Lorazepam, Rohipnol, etc.)</span></li>
+                        <li><strong>h. Alucinógenos:</strong> <span class="substance-examples-card">(LSD, ácidos, hongos, mezcalina, ketamina, PCP, etc.)</span></li>
+                        <li><strong>i. Opiáceos:</strong> <span class="substance-examples-card">(heroína, metadona, codeína, morfina, dolantina/petidina, etc.)</span></li>
+                        <li><strong>j. Otras:</strong> <span class="substance-examples-card">(especificar si aplica)</span></li>
+                    </ul>
+                </div>
+
+                <div class="substance-row header grid-q1">
+                    <span>Sustancia</span>
+                    <span>NO</span>
+                    <span>SI</span>
+                </div>
+                <!-- Repetir para cada sustancia -->
+                <div class="substance-row grid-q1">
+                    <div>
+                        <span class="substance-label">a. Tabaco</span>
+                        <span class="substance-examples">(cigarrillos, cigarros habanos, tabaco de mascar, pipa, etc.)</span>
+                    </div>
+                    <div class="radio-group"><input type="radio" name="q1_tabaco" value="0" checked onchange="checkQ1()"></div>
+                    <div class="radio-group"><input type="radio" name="q1_tabaco" value="3" onchange="checkQ1()"></div>
+                </div>
+                 <div class="substance-row grid-q1">
+                     <div>
+                        <span class="substance-label">b. Bebidas alcohólicas</span>
+                        <span class="substance-examples">(cerveza, vino, licores destilados, etc.)</span>
+                    </div>
+                    <div class="radio-group"><input type="radio" name="q1_alcohol" value="0" checked onchange="checkQ1()"></div>
+                    <div class="radio-group"><input type="radio" name="q1_alcohol" value="3" onchange="checkQ1()"></div>
+                </div>
+                 <div class="substance-row grid-q1">
+                     <div>
+                        <span class="substance-label">c. Cannabis</span>
+                        <span class="substance-examples">(marihuana, hierba, hashish, etc.)</span>
+                     </div>
+                    <div class="radio-group"><input type="radio" name="q1_cannabis" value="0" checked onchange="checkQ1()"></div>
+                    <div class="radio-group"><input type="radio" name="q1_cannabis" value="3" onchange="checkQ1()"></div>
+                </div>
+                <div class="substance-row grid-q1">
+                     <div>
+                        <span class="substance-label">d. Cocaína</span>
+                        <span class="substance-examples">(coca, basuco, crack, paco, etc.)</span>
+                     </div>
+                    <div class="radio-group"><input type="radio" name="q1_cocaina" value="0" checked onchange="checkQ1()"></div>
+                    <div class="radio-group"><input type="radio" name="q1_cocaina" value="3" onchange="checkQ1()"></div>
+                </div>
+                 <div class="substance-row grid-q1">
+                     <div>
+                        <span class="substance-label">e. Anfetaminas u otro tipo de estimulantes</span>
+                        <span class="substance-examples">(speed, éxtasis, píldoras adelgazantes, etc.)</span>
+                     </div>
+                    <div class="radio-group"><input type="radio" name="q1_anfetaminas" value="0" checked onchange="checkQ1()"></div>
+                    <div class="radio-group"><input type="radio" name="q1_anfetaminas" value="3" onchange="checkQ1()"></div>
+                </div>
+                 <div class="substance-row grid-q1">
+                     <div>
+                        <span class="substance-label">f. Inhalantes</span>
+                        <span class="substance-examples">(pegantes, colas, gasolina, solventes, etc.)</span>
+                     </div>
+                    <div class="radio-group"><input type="radio" name="q1_inhalantes" value="0" checked onchange="checkQ1()"></div>
+                    <div class="radio-group"><input type="radio" name="q1_inhalantes" value="3" onchange="checkQ1()"></div>
+                </div>
+                 <div class="substance-row grid-q1">
+                     <div>
+                        <span class="substance-label">g. Tranquilizantes o pastillas para dormir</span>
+                        <span class="substance-examples">(Valium/Diazepam, Trankimazin/Alprazolam/Xanax, Orfidal/Lorazepam, Rohipnol, etc.)</span>
+                     </div>
+                    <div class="radio-group"><input type="radio" name="q1_sedantes" value="0" checked onchange="checkQ1()"></div>
+                    <div class="radio-group"><input type="radio" name="q1_sedantes" value="3" onchange="checkQ1()"></div>
+                </div>
+                 <div class="substance-row grid-q1">
+                     <div>
+                        <span class="substance-label">h. Alucinógenos</span>
+                        <span class="substance-examples">(LSD, ácidos, hongos, mezcalina, ketamina, PCP, etc.)</span>
+                     </div>
+                    <div class="radio-group"><input type="radio" name="q1_alucinogenos" value="0" checked onchange="checkQ1()"></div>
+                    <div class="radio-group"><input type="radio" name="q1_alucinogenos" value="3" onchange="checkQ1()"></div>
+                </div>
+                 <div class="substance-row grid-q1">
+                     <div>
+                        <span class="substance-label">i. Opiáceos</span>
+                        <span class="substance-examples">(heroína, metadona, codeína, morfina, dolantina/petidina, etc.)</span>
+                     </div>
+                    <div class="radio-group"><input type="radio" name="q1_opiaceos" value="0" checked onchange="checkQ1()"></div>
+                    <div class="radio-group"><input type="radio" name="q1_opiaceos" value="3" onchange="checkQ1()"></div>
+                </div>
+                 <div class="substance-row grid-q1">
+                     <div>
+                        <span class="substance-label">j. Otras - especifique:</span>
+                        <input type="text" id="q1_otras_especificar" placeholder="Especifique aquí si aplica" style="width: 90%; font-size: 0.9em; margin-top: 3px;">
+                     </div>
+                    <div class="radio-group"><input type="radio" name="q1_otras" value="0" checked onchange="checkQ1()"></div>
+                    <div class="radio-group"><input type="radio" name="q1_otras" value="3" onchange="checkQ1()"></div>
+                </div>
+                 <div id="q1-no-message" class="hidden">
+                    Como no has consumido ninguna de estas sustancias, la entrevista ha terminado. ¡Gracias por tu participación!
+                </div>
+            </div>
+
+            <!-- Preguntas 2 a 7 (Inicialmente ocultas si Q1 es todo NO) -->
+            <div id="questions-2-to-7" class="hidden">
+
+                <!-- Pregunta 2 -->
+                <div class="question-group">
+                    <h3>Pregunta 2: En los últimos tres meses, ¿con qué frecuencia ha consumido las sustancias que mencionó? <span class="question-instruction">(Mira las opciones en la tarjeta)</span></h3>
+                     <!-- Tarjeta de Respuesta Q2 -->
+                    <div class="response-card">
+                         <h4 class="card-title">Tarjeta de Respuestas (Frecuencia)</h4>
+                         <div class="response-options-grid card-grid-q2-5">
+                            <span class="card-placeholder"></span> <!-- Placeholder for alignment -->
+                            <div class="response-option-block">
+                                <span class="option-text">Nunca</span>
+                                <span class="card-explanation">No has consumido en los últimos 3 meses.</span>
+                            </div>
+                            <div class="response-option-block">
+                                <span class="option-text">1 ó 2 veces</span>
+                                <span class="card-explanation">Has consumido 1 ó 2 veces en los últimos 3 meses.</span>
+                            </div>
+                            <div class="response-option-block">
+                                <span class="option-text">Cada mes</span>
+                                <span class="card-explanation">Has consumido de 1 a 3 veses en el último mes.</span>
+                            </div>
+                             <div class="response-option-block">
+                                <span class="option-text">Cada semana</span>
+                                <span class="card-explanation">Has consumido de 1 a 4 veces por semana.</span>
+                            </div>
+                             <div class="response-option-block">
+                                <span class="option-text">A diario o casi a diario</span>
+                                <span class="card-explanation">Has consumido de 5 a 7 dias por semana.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="substance-row header grid-q2">
+                        <span>Sustancia</span>
+                        <span>Nunca</span>
+                        <span>1 ó 2 veces</span>
+                        <span>Cada mes</span>
+                        <span>Cada semana</span>
+                        <span>A diario o casi a diario</span>
+                    </div>
+                    <!-- Sustancias rows Q2 -->
+                    <div class="substance-row grid-q2">
+                        <span class="substance-label">a. Tabaco</span>
+                        <div class="radio-group"><input type="radio" name="q2_tabaco" value="0" checked onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_tabaco" value="2" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_tabaco" value="3" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_tabaco" value="4" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_tabaco" value="6" onchange="checkQ2()"></div>
+                    </div>
+                    <div class="substance-row grid-q2">
+                        <span class="substance-label">b. Bebidas alcohólicas</span>
+                        <div class="radio-group"><input type="radio" name="q2_alcohol" value="0" checked onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_alcohol" value="2" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_alcohol" value="3" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_alcohol" value="4" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_alcohol" value="6" onchange="checkQ2()"></div>
+                    </div>
+                     <div class="substance-row grid-q2">
+                        <span class="substance-label">c. Cannabis</span>
+                        <div class="radio-group"><input type="radio" name="q2_cannabis" value="0" checked onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_cannabis" value="2" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_cannabis" value="3" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_cannabis" value="4" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_cannabis" value="6" onchange="checkQ2()"></div>
+                    </div>
+                     <div class="substance-row grid-q2">
+                        <span class="substance-label">d. Cocaína</span>
+                        <div class="radio-group"><input type="radio" name="q2_cocaina" value="0" checked onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_cocaina" value="2" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_cocaina" value="3" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_cocaina" value="4" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_cocaina" value="6" onchange="checkQ2()"></div>
+                    </div>
+                     <div class="substance-row grid-q2">
+                        <span class="substance-label">e. Anfetaminas/Estimulantes</span>
+                        <div class="radio-group"><input type="radio" name="q2_anfetaminas" value="0" checked onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_anfetaminas" value="2" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_anfetaminas" value="3" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_anfetaminas" value="4" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_anfetaminas" value="6" onchange="checkQ2()"></div>
+                    </div>
+                     <div class="substance-row grid-q2">
+                        <span class="substance-label">f. Inhalantes</span>
+                        <div class="radio-group"><input type="radio" name="q2_inhalantes" value="0" checked onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_inhalantes" value="2" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_inhalantes" value="3" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_inhalantes" value="4" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_inhalantes" value="6" onchange="checkQ2()"></div>
+                    </div>
+                     <div class="substance-row grid-q2">
+                        <span class="substance-label">g. Tranquilizantes/Pastillas dormir</span>
+                        <div class="radio-group"><input type="radio" name="q2_sedantes" value="0" checked onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_sedantes" value="2" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_sedantes" value="3" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_sedantes" value="4" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_sedantes" value="6" onchange="checkQ2()"></div>
+                    </div>
+                     <div class="substance-row grid-q2">
+                        <span class="substance-label">h. Alucinógenos</span>
+                        <div class="radio-group"><input type="radio" name="q2_alucinogenos" value="0" checked onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_alucinogenos" value="2" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_alucinogenos" value="3" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_alucinogenos" value="4" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_alucinogenos" value="6" onchange="checkQ2()"></div>
+                    </div>
+                     <div class="substance-row grid-q2">
+                        <span class="substance-label">i. Opiáceos</span>
+                        <div class="radio-group"><input type="radio" name="q2_opiaceos" value="0" checked onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_opiaceos" value="2" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_opiaceos" value="3" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_opiaceos" value="4" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_opiaceos" value="6" onchange="checkQ2()"></div>
+                    </div>
+                     <div class="substance-row grid-q2">
+                        <span class="substance-label">j. Otras</span>
+                        <div class="radio-group"><input type="radio" name="q2_otras" value="0" checked onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_otras" value="2" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_otras" value="3" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_otras" value="4" onchange="checkQ2()"></div>
+                        <div class="radio-group"><input type="radio" name="q2_otras" value="6" onchange="checkQ2()"></div>
+                    </div>
+                     <div id="q2-no-message" class="hidden">
+                        Como no has consumido ninguna sustancia en los últimos 3 meses, pasaremos a la pregunta 6.
+                    </div>
+                </div>
+
+                <!-- Preguntas 3 a 5 (Inicialmente ocultas si Q2 es todo Nunca) -->
+                <div id="questions-3-to-5" class="hidden">
+
+                    <!-- Pregunta 3 -->
+                    <div class="question-group">
+                        <h3>Pregunta 3: En los últimos tres meses ¿con qué frecuencia se aleja de la casa, amigos o estudio para estar solo para consumir? <span class="question-instruction">(Mira las opciones en la tarjeta)</span></h3>
+                         <!-- Tarjeta de Respuesta Q3 -->
+                         <div class="response-card">
+                             <h4 class="card-title">Tarjeta de Respuestas (Frecuencia)</h4>
+                             <div class="response-options-grid card-grid-q2-5">
+                                <span class="card-placeholder"></span>
+                                <div class="response-option-block">
+                                    <span class="option-text">Nunca</span>
+                                    <span class="card-explanation">Nunca te has alejado para consumir solo en los últimos 3 meses.</span>
+                                </div>
+                                <div class="response-option-block">
+                                    <span class="option-text">1 ó 2 veces</span>
+                                    <span class="card-explanation">Te has alejado 1 ó 2 veces para consumir solo en los últimos 3 meses.</span>
+                                </div>
+                                <div class="response-option-block">
+                                    <span class="option-text">Cada mes</span>
+                                    <span class="card-explanation">Te has alejado consumir solo de 1 a 3 veces en el último mes.</span>
+                                </div>
+                                 <div class="response-option-block">
+                                    <span class="option-text">Cada semana</span>
+                                    <span class="card-explanation">Te has alejado de 1 a 4 veces por semana.</span>
+                                </div>
+                                 <div class="response-option-block">
+                                    <span class="option-text">A diario o casi a diario</span>
+                                    <span class="card-explanation">Te has alejado para consumir solo de 5 a 7 dias por semana.</span>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="substance-row header grid-q3">
+                            <span>Sustancia</span>
+                            <span>Nunca</span>
+                            <span>1 ó 2 veces</span>
+                            <span>Cada mes</span>
+                            <span>Cada semana</span>
+                            <span>A diario o casi a diario</span>
+                        </div>
+                        <!-- Sustancias rows Q3 -->
+                         <div class="substance-row grid-q3">
+                            <span class="substance-label">a. Tabaco</span>
+                            <div class="radio-group"><input type="radio" name="q3_tabaco" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q3_tabaco" value="3"></div>
+                            <div class="radio-group"><input type="radio" name="q3_tabaco" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q3_tabaco" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q3_tabaco" value="6"></div>
+                        </div>
+                        <div class="substance-row grid-q3">
+                            <span class="substance-label">b. Bebidas alcohólicas</span>
+                            <div class="radio-group"><input type="radio" name="q3_alcohol" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q3_alcohol" value="3"></div>
+                            <div class="radio-group"><input type="radio" name="q3_alcohol" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q3_alcohol" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q3_alcohol" value="6"></div>
+                        </div>
+                         <div class="substance-row grid-q3">
+                            <span class="substance-label">c. Cannabis</span>
+                            <div class="radio-group"><input type="radio" name="q3_cannabis" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q3_cannabis" value="3"></div>
+                            <div class="radio-group"><input type="radio" name="q3_cannabis" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q3_cannabis" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q3_cannabis" value="6"></div>
+                        </div>
+                         <div class="substance-row grid-q3">
+                            <span class="substance-label">d. Cocaína</span>
+                            <div class="radio-group"><input type="radio" name="q3_cocaina" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q3_cocaina" value="3"></div>
+                            <div class="radio-group"><input type="radio" name="q3_cocaina" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q3_cocaina" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q3_cocaina" value="6"></div>
+                        </div>
+                         <div class="substance-row grid-q3">
+                            <span class="substance-label">e. Anfetaminas/Estimulantes</span>
+                            <div class="radio-group"><input type="radio" name="q3_anfetaminas" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q3_anfetaminas" value="3"></div>
+                            <div class="radio-group"><input type="radio" name="q3_anfetaminas" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q3_anfetaminas" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q3_anfetaminas" value="6"></div>
+                        </div>
+                         <div class="substance-row grid-q3">
+                            <span class="substance-label">f. Inhalantes</span>
+                            <div class="radio-group"><input type="radio" name="q3_inhalantes" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q3_inhalantes" value="3"></div>
+                            <div class="radio-group"><input type="radio" name="q3_inhalantes" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q3_inhalantes" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q3_inhalantes" value="6"></div>
+                        </div>
+                         <div class="substance-row grid-q3">
+                            <span class="substance-label">g. Tranquilizantes/Pastillas dormir</span>
+                            <div class="radio-group"><input type="radio" name="q3_sedantes" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q3_sedantes" value="3"></div>
+                            <div class="radio-group"><input type="radio" name="q3_sedantes" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q3_sedantes" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q3_sedantes" value="6"></div>
+                        </div>
+                         <div class="substance-row grid-q3">
+                            <span class="substance-label">h. Alucinógenos</span>
+                            <div class="radio-group"><input type="radio" name="q3_alucinogenos" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q3_alucinogenos" value="3"></div>
+                            <div class="radio-group"><input type="radio" name="q3_alucinogenos" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q3_alucinogenos" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q3_alucinogenos" value="6"></div>
+                        </div>
+                         <div class="substance-row grid-q3">
+                            <span class="substance-label">i. Opiáceos</span>
+                            <div class="radio-group"><input type="radio" name="q3_opiaceos" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q3_opiaceos" value="3"></div>
+                            <div class="radio-group"><input type="radio" name="q3_opiaceos" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q3_opiaceos" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q3_opiaceos" value="6"></div>
+                        </div>
+                         <div class="substance-row grid-q3">
+                            <span class="substance-label">j. Otras</span>
+                            <div class="radio-group"><input type="radio" name="q3_otras" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q3_otras" value="3"></div>
+                            <div class="radio-group"><input type="radio" name="q3_otras" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q3_otras" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q3_otras" value="6"></div>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 4 -->
+                    <div class="question-group">
+                        <h3>Pregunta 4: En los últimos tres meses, ¿con qué frecuencia le ha llevado su consumo a problemas de salud, sociales, legales o económicos? <span class="question-instruction">(Mira las opciones en la tarjeta)</span></h3>
+                         <!-- Tarjeta de Respuesta Q4 -->
+                         <div class="response-card">
+                             <h4 class="card-title">Tarjeta de Respuestas (Frecuencia de Problemas)</h4>
+                             <div class="response-options-grid card-grid-q2-5">
+                                <span class="card-placeholder"></span>
+                                <div class="response-option-block">
+                                    <span class="option-text">Nunca</span>
+                                    <span class="card-explanation">El consumo no te ha causado problemas en los últimos 3 meses.</span>
+                                </div>
+                                <div class="response-option-block">
+                                    <span class="option-text">1 ó 2 veces</span>
+                                    <span class="card-explanation">El consumo te ha causado problemas 1 ó 2 veces en los últimos 3 meses.</span>
+                                </div>
+                                <div class="response-option-block">
+                                    <span class="option-text">Cada mes</span>
+                                    <span class="card-explanation">El consumo te ha causado problemas 1 a 3 veces en el último mes.</span>
+                                </div>
+                                 <div class="response-option-block">
+                                    <span class="option-text">Cada semana</span>
+                                    <span class="card-explanation">El consumo te ha causado problemas 1 a 4 veces por semana.</span>
+                                </div>
+                                 <div class="response-option-block">
+                                    <span class="option-text">A diario o casi a diario</span>
+                                    <span class="card-explanation">El consumo te ha causado problemas de 5 a 7 dias por semana.</span>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="substance-row header grid-q4">
+                            <span>Sustancia</span>
+                            <span>Nunca</span>
+                            <span>1 ó 2 veces</span>
+                            <span>Cada mes</span>
+                            <span>Cada semana</span>
+                            <span>A diario o casi a diario</span>
+                        </div>
+                         <!-- Sustancias rows Q4 -->
+                         <div class="substance-row grid-q4">
+                            <span class="substance-label">a. Tabaco</span>
+                            <div class="radio-group"><input type="radio" name="q4_tabaco" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q4_tabaco" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q4_tabaco" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q4_tabaco" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q4_tabaco" value="7"></div>
+                        </div>
+                        <div class="substance-row grid-q4">
+                            <span class="substance-label">b. Bebidas alcohólicas</span>
+                            <div class="radio-group"><input type="radio" name="q4_alcohol" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q4_alcohol" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q4_alcohol" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q4_alcohol" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q4_alcohol" value="7"></div>
+                        </div>
+                         <div class="substance-row grid-q4">
+                            <span class="substance-label">c. Cannabis</span>
+                            <div class="radio-group"><input type="radio" name="q4_cannabis" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q4_cannabis" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q4_cannabis" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q4_cannabis" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q4_cannabis" value="7"></div>
+                        </div>
+                         <div class="substance-row grid-q4">
+                            <span class="substance-label">d. Cocaína</span>
+                            <div class="radio-group"><input type="radio" name="q4_cocaina" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q4_cocaina" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q4_cocaina" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q4_cocaina" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q4_cocaina" value="7"></div>
+                        </div>
+                         <div class="substance-row grid-q4">
+                            <span class="substance-label">e. Anfetaminas/Estimulantes</span>
+                            <div class="radio-group"><input type="radio" name="q4_anfetaminas" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q4_anfetaminas" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q4_anfetaminas" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q4_anfetaminas" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q4_anfetaminas" value="7"></div>
+                        </div>
+                         <div class="substance-row grid-q4">
+                            <span class="substance-label">f. Inhalantes</span>
+                            <div class="radio-group"><input type="radio" name="q4_inhalantes" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q4_inhalantes" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q4_inhalantes" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q4_inhalantes" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q4_inhalantes" value="7"></div>
+                        </div>
+                         <div class="substance-row grid-q4">
+                            <span class="substance-label">g. Tranquilizantes/Pastillas dormir</span>
+                            <div class="radio-group"><input type="radio" name="q4_sedantes" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q4_sedantes" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q4_sedantes" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q4_sedantes" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q4_sedantes" value="7"></div>
+                        </div>
+                         <div class="substance-row grid-q4">
+                            <span class="substance-label">h. Alucinógenos</span>
+                            <div class="radio-group"><input type="radio" name="q4_alucinogenos" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q4_alucinogenos" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q4_alucinogenos" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q4_alucinogenos" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q4_alucinogenos" value="7"></div>
+                        </div>
+                         <div class="substance-row grid-q4">
+                            <span class="substance-label">i. Opiáceos</span>
+                            <div class="radio-group"><input type="radio" name="q4_opiaceos" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q4_opiaceos" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q4_opiaceos" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q4_opiaceos" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q4_opiaceos" value="7"></div>
+                        </div>
+                         <div class="substance-row grid-q4">
+                            <span class="substance-label">j. Otras</span>
+                            <div class="radio-group"><input type="radio" name="q4_otras" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q4_otras" value="4"></div>
+                            <div class="radio-group"><input type="radio" name="q4_otras" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q4_otras" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q4_otras" value="7"></div>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 5 -->
+                    <div class="question-group">
+                        <h3>Pregunta 5: En los últimos tres meses, ¿con qué frecuencia dejó de hacer lo que se esperaba de usted habitualmente por el consumo? (ej. inasistencia escolar, no participación en actividades) <span class="question-instruction">(Mira las opciones en la tarjeta)</span></h3>
+                         <!-- Tarjeta de Respuesta Q5 -->
+                         <div class="response-card">
+                             <h4 class="card-title">Tarjeta de Respuestas (Frecuencia de Incumplimiento)</h4>
+                             <div class="response-options-grid card-grid-q2-5">
+                                <span class="card-placeholder"></span>
+                                <div class="response-option-block">
+                                    <span class="option-text">Nunca</span>
+                                    <span class="card-explanation">Nunca dejaste de hacer lo esperado por el consumo en los últimos 3 meses.</span>
+                                </div>
+                                <div class="response-option-block">
+                                    <span class="option-text">1 ó 2 veces</span>
+                                    <span class="card-explanation">Dejaste de hacer lo esperado 1 ó 2 veces en los últimos 3 meses.</span>
+                                </div>
+                                <div class="response-option-block">
+                                    <span class="option-text">Cada mes</span>
+                                    <span class="card-explanation">Dejaste de hacer lo esperado de 1 a 3 veces en el último mes.</span>
+                                </div>
+                                 <div class="response-option-block">
+                                    <span class="option-text">Cada semana</span>
+                                    <span class="card-explanation">Dejaste de hacer lo esperado de 1 a 4 veces por semana.</span>
+                                </div>
+                                 <div class="response-option-block">
+                                    <span class="option-text">A diario o casi a diario</span>
+                                    <span class="card-explanation">Dejaste de hacer lo esperado de 5 a 7 veces por semana.</span>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="substance-row header grid-q5">
+                            <span>Sustancia</span>
+                            <span>Nunca</span>
+                            <span>1 ó 2 veces</span>
+                            <span>Cada mes</span>
+                            <span>Cada semana</span>
+                            <span>A diario o casi a diario</span>
+                        </div>
+                         <!-- Sustancias rows Q5 -->
+                         <div class="substance-row grid-q5">
+                            <span class="substance-label">a. Tabaco</span>
+                            <div class="q5-na">(No aplica para tabaco)</div>
+                             <input type="hidden" name="q5_tabaco" value="0">
+                        </div>
+                        <div class="substance-row grid-q5">
+                            <span class="substance-label">b. Bebidas alcohólicas</span>
+                            <div class="radio-group"><input type="radio" name="q5_alcohol" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q5_alcohol" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q5_alcohol" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q5_alcohol" value="7"></div>
+                            <div class="radio-group"><input type="radio" name="q5_alcohol" value="8"></div>
+                        </div>
+                         <div class="substance-row grid-q5">
+                            <span class="substance-label">c. Cannabis</span>
+                            <div class="radio-group"><input type="radio" name="q5_cannabis" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q5_cannabis" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q5_cannabis" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q5_cannabis" value="7"></div>
+                            <div class="radio-group"><input type="radio" name="q5_cannabis" value="8"></div>
+                        </div>
+                         <div class="substance-row grid-q5">
+                            <span class="substance-label">d. Cocaína</span>
+                            <div class="radio-group"><input type="radio" name="q5_cocaina" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q5_cocaina" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q5_cocaina" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q5_cocaina" value="7"></div>
+                            <div class="radio-group"><input type="radio" name="q5_cocaina" value="8"></div>
+                        </div>
+                         <div class="substance-row grid-q5">
+                            <span class="substance-label">e. Anfetaminas/Estimulantes</span>
+                            <div class="radio-group"><input type="radio" name="q5_anfetaminas" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q5_anfetaminas" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q5_anfetaminas" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q5_anfetaminas" value="7"></div>
+                            <div class="radio-group"><input type="radio" name="q5_anfetaminas" value="8"></div>
+                        </div>
+                         <div class="substance-row grid-q5">
+                            <span class="substance-label">f. Inhalantes</span>
+                            <div class="radio-group"><input type="radio" name="q5_inhalantes" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q5_inhalantes" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q5_inhalantes" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q5_inhalantes" value="7"></div>
+                            <div class="radio-group"><input type="radio" name="q5_inhalantes" value="8"></div>
+                        </div>
+                         <div class="substance-row grid-q5">
+                            <span class="substance-label">g. Tranquilizantes/Pastillas dormir</span>
+                            <div class="radio-group"><input type="radio" name="q5_sedantes" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q5_sedantes" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q5_sedantes" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q5_sedantes" value="7"></div>
+                            <div class="radio-group"><input type="radio" name="q5_sedantes" value="8"></div>
+                        </div>
+                         <div class="substance-row grid-q5">
+                            <span class="substance-label">h. Alucinógenos</span>
+                            <div class="radio-group"><input type="radio" name="q5_alucinogenos" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q5_alucinogenos" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q5_alucinogenos" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q5_alucinogenos" value="7"></div>
+                            <div class="radio-group"><input type="radio" name="q5_alucinogenos" value="8"></div>
+                        </div>
+                         <div class="substance-row grid-q5">
+                            <span class="substance-label">i. Opiáceos</span>
+                            <div class="radio-group"><input type="radio" name="q5_opiaceos" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q5_opiaceos" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q5_opiaceos" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q5_opiaceos" value="7"></div>
+                            <div class="radio-group"><input type="radio" name="q5_opiaceos" value="8"></div>
+                        </div>
+                         <div class="substance-row grid-q5">
+                            <span class="substance-label">j. Otras</span>
+                            <div class="radio-group"><input type="radio" name="q5_otras" value="0" checked></div>
+                            <div class="radio-group"><input type="radio" name="q5_otras" value="5"></div>
+                            <div class="radio-group"><input type="radio" name="q5_otras" value="6"></div>
+                            <div class="radio-group"><input type="radio" name="q5_otras" value="7"></div>
+                            <div class="radio-group"><input type="radio" name="q5_otras" value="8"></div>
+                        </div>
+                    </div>
+                </div> <!-- Fin de Questions 3-5 -->
+
+                <!-- Pregunta 6 -->
+                <div class="question-group">
+                    <h3>Pregunta 6: ¿Un amigo, un familiar o alguien más alguna vez ha mostrado preocupación por su consumo? <span class="question-instruction">(Mira las opciones en la tarjeta)</span></h3>
+                     <!-- Tarjeta de Respuesta Q6 -->
+                    <div class="response-card">
+                         <h4 class="card-title">Tarjeta de Respuestas (Preocupación de otros)</h4>
+                         <div class="response-options-grid card-grid-q6-7">
+                            <span class="card-placeholder"></span>
+                            <div class="response-option-block">
+                                <span class="option-text">No. Nunca</span>
+                                <span class="card-explanation">Nadie ha mostrado preocupación por tu consumo.</span>
+                            </div>
+                            <div class="response-option-block">
+                                <span class="option-text">Si, pero no en los ultimos tres meses</span>
+                                <span class="card-explanation">Alguien mostró preocupación, pero fue hace más de 3 meses.</span>
+                            </div>
+                            <div class="response-option-block">
+                                <span class="option-text">Si, en los ultimos tres meses</span>
+                                <span class="card-explanation">Alguien mostró preocupación en los últimos 3 meses.</span>
+                            </div>
+                         </div>
+                    </div>
+                     <div class="substance-row header grid-q6">
+                         <span>Sustancia</span>
+                         <span>No. Nunca</span>
+                         <span>Si, pero no en los ultimos tres meses</span>
+                         <span>Si, en los ultimos tres meses</span>
+                     </div>
+                      <!-- Sustancias rows Q6 -->
+                     <div class="substance-row grid-q6">
+                        <span class="substance-label">a. Tabaco</span>
+                        <div class="radio-group"><input type="radio" name="q6_tabaco" value="0" checked></div>
+                        <div class="radio-group"><input type="radio" name="q6_tabaco" value="3"></div>
+                        <div class="radio-group"><input type="radio" name="q6_tabaco" value="6"></div>
+                     </div>
+                     <div class="substance-row grid-q6">
+                        <span class="substance-label">b. Bebidas alcohólicas</span>
+                        <div class="radio-group"><input type="radio" name="q6_alcohol" value="0" checked></div>
+                        <div class="radio-group"><input type="radio" name="q6_alcohol" value="3"></div>
+                        <div class="radio-group"><input type="radio" name="q6_alcohol" value="6"></div>
+                     </div>
+                     <div class="substance-row grid-q6">
+                        <span class="substance-label">c. Cannabis</span>
+                        <div class="radio-group"><input type="radio" name="q6_cannabis" value="0" checked></div>
+                        <div class="radio-group"><input type="radio" name="q6_cannabis" value="3"></div>
+                        <div class="radio-group"><input type="radio" name="q6_cannabis" value="6"></div>
+                     </div>
+                     <div class="substance-row grid-q6">
+                        <span class="substance-label">d. Cocaína</span>
+                        <div class="radio-group"><input type="radio" name="q6_cocaina" value="0" checked></div>
+                        <div class="radio-group"><input type="radio" name="q6_cocaina" value="3"></div>
+                        <div class="radio-group"><input type="radio" name="q6_cocaina" value="6"></div>
+                     </div>
+                     <div class="substance-row grid-q6">
+                        <span class="substance-label">e. Anfetaminas/Estimulantes</span>
+                        <div class="radio-group"><input type="radio" name="q6_anfetaminas" value="0" checked></div>
+                        <div class="radio-group"><input type="radio" name="q6_anfetaminas" value="3"></div>
+                        <div class="radio-group"><input type="radio" name="q6_anfetaminas" value="6"></div>
+                     </div>
+                     <div class="substance-row grid-q6">
+                        <span class="substance-label">f. Inhalantes</span>
+                        <div class="radio-group"><input type="radio" name="q6_inhalantes" value="0" checked></div>
+                        <div class="radio-group"><input type="radio" name="q6_inhalantes" value="3"></div>
+                        <div class="radio-group"><input type="radio" name="q6_inhalantes" value="6"></div>
+                     </div>
+                     <div class="substance-row grid-q6">
+                        <span class="substance-label">g. Tranquilizantes/Pastillas dormir</span>
+                        <div class="radio-group"><input type="radio" name="q6_sedantes" value="0" checked></div>
+                        <div class="radio-group"><input type="radio" name="q6_sedantes" value="3"></div>
+                        <div class="radio-group"><input type="radio" name="q6_sedantes" value="6"></div>
+                     </div>
+                     <div class="substance-row grid-q6">
+                        <span class="substance-label">h. Alucinógenos</span>
+                        <div class="radio-group"><input type="radio" name="q6_alucinogenos" value="0" checked></div>
+                        <div class="radio-group"><input type="radio" name="q6_alucinogenos" value="3"></div>
+                        <div class="radio-group"><input type="radio" name="q6_alucinogenos" value="6"></div>
+                     </div>
+                     <div class="substance-row grid-q6">
+                        <span class="substance-label">i. Opiáceos</span>
+                        <div class="radio-group"><input type="radio" name="q6_opiaceos" value="0" checked></div>
+                        <div class="radio-group"><input type="radio" name="q6_opiaceos" value="3"></div>
+                        <div class="radio-group"><input type="radio" name="q6_opiaceos" value="6"></div>
+                     </div>
+                     <div class="substance-row grid-q6">
+                        <span class="substance-label">j. Otras</span>
+                        <div class="radio-group"><input type="radio" name="q6_otras" value="0" checked></div>
+                        <div class="radio-group"><input type="radio" name="q6_otras" value="3"></div>
+                        <div class="radio-group"><input type="radio" name="q6_otras" value="6"></div>
+                     </div>
+                </div>
+
+                 <!-- Pregunta 7 (Inyección) -->
+                <div class="question-group">
+                    <h3>Pregunta 7: ¿Ha consumido alguna vez alguna droga por vía inyectada? (ÚNICAMENTE PARA USOS NO MÉDICOS) <span class="question-instruction">(Mira las opciones en la tarjeta)</span></h3>
+                    <!-- Tarjeta de Respuesta Q7 -->
+                    <div class="response-card">
+                         <h4 class="card-title">Tarjeta de Respuestas (Consumo Inyectado)</h4>
+                         <div class="response-options-grid" style="grid-template-columns: repeat(3, 1fr);"> <!-- Adjust grid for 3 options -->
+                             <div class="response-option-block">
+                                <span class="option-text">No. Nunca</span>
+                                <span class="card-explanation">Nunca has consumido drogas inyectadas.</span>
+                            </div>
+                            <div class="response-option-block">
+                                <span class="option-text">Si, pero no en los ultimos tres meses</span>
+                                <span class="card-explanation">Sí consumiste drogas inyectadas, pero fue hace más de 3 meses.</span>
+                            </div>
+                            <div class="response-option-block">
+                                <span class="option-text">Si, en los ultimos tres meses</span>
+                                <span class="card-explanation">Sí has consumido drogas inyectadas en los últimos 3 meses.</span>
+                            </div>
+                         </div>
+                    </div>
+                    <div class="q7-options" style="margin-top: 15px; text-align: center;">
+                        <label><input type="radio" name="q7_inyectada" value="0" checked> No. Nunca</label>
+                        <label><input type="radio" name="q7_inyectada" value="1"> Si, pero no en los ultimos tres meses</label> <!-- Usamos 1 internamente para diferenciar -->
+                        <label><input type="radio" name="q7_inyectada" value="6"> Si, en los ultimos tres meses</label>
+                    </div>
+                </div>
+
+                <button type="button" id="calculateButton" onclick="calculateASSIST()">Calcular Resultados</button>
+
+            </div> <!-- Fin de Questions 2-7 -->
+        </form>
+
+        <div id="results" class="hidden">
+            <h2>Resultados del Cuestionario ASSIST Young</h2>
+            <!-- Los resultados se insertarán aquí -->
+        </div>
+
+        <div id="feedbackCard" class="hidden">
+             <!-- La tarjeta de retroalimentación se insertará aquí -->
+        </div>
+
+    </div>
+    
+
+    <script>
+        const substances = {
+            // Umbrales tomados de la tabla en Instrumento.pdf
+            tabaco:       { name: 'Tabaco', q5Applies: false, thresholds: { low: 0, moderate: 11 } }, // Bajo 0, Mod 1-11, Alto 12+
+            alcohol:      { name: 'Bebidas alcohólicas', q5Applies: true, thresholds: { low: 4, moderate: 17 } }, // Bajo 0-4, Mod 5-17, Alto 18+
+            cannabis:     { name: 'Cannabis', q5Applies: true, thresholds: { low: 0, moderate: 11 } }, // Bajo 0, Mod 1-11, Alto 12+
+            cocaina:      { name: 'Cocaína', q5Applies: true, thresholds: { low: 0, moderate: 6 } }, // Bajo 0, Mod 1-6, Alto 7+
+            anfetaminas:  { name: 'Anfetaminas/Estimulantes', q5Applies: true, thresholds: { low: 0, moderate: 8 } }, // Bajo 0, Mod 1-8, Alto 9+
+            inhalantes:   { name: 'Inhalantes', q5Applies: true, thresholds: { low: 0, moderate: 8 } }, // Bajo 0, Mod 1-8, Alto 9+
+            sedantes:     { name: 'Tranquilizantes/Pastillas dormir', q5Applies: true, thresholds: { low: 0, moderate: 6 } }, // Bajo 0, Mod 1-6, Alto 7+
+            alucinogenos: { name: 'Alucinógenos', q5Applies: true, thresholds: { low: 0, moderate: 8 } }, // Bajo 0, Mod 1-8, Alto 9+
+            opiaceos:     { name: 'Opiáceos', q5Applies: true, thresholds: { low: 0, moderate: 6 } }, // Bajo 0, Mod 1-6, Alto 7+
+            otras:        { name: 'Otras drogas', q5Applies: true, thresholds: { low: 0, moderate: 6 } }  // Bajo 0, Mod 1-6, Alto 7+
+        };
+
+         // --- Riesgos asociados (adaptados para adolescentes) ---
+        const risksData = {
+             tabaco: [
+                "Problemas respiratorios (tos, dificultad para respirar)",
+                "Menor rendimiento físico",
+                "Dependencia a la nicotina (es difícil dejarlo)",
+                "Mal aliento, dientes amarillos",
+                "Mayor riesgo de cáncer y problemas del corazón en el futuro"
+            ],
+            alcohol: [
+                "Problemas de concentración y memoria (afecta el estudio)",
+                "Bajo rendimiento en el colegio, faltas",
+                "Conflictos con familiares o amigos",
+                "Accidentes, peleas, relaciones sexuales sin protección",
+                "Cambios de humor (ponerse irritable o triste)",
+                "Problemas de salud (gastritis, daño al hígado a largo plazo)"
+            ],
+            cannabis: [
+                "Dificultad para poner atención, concentrarse y recordar (afecta el estudio)",
+                "Menos ganas de hacer cosas (colegio, deportes, pasatiempos)",
+                "Ansiedad, sentir que te persiguen (paranoia) o ataques de pánico",
+                "Problemas para respirar si se fuma (tos)",
+                "Conflictos en casa o con amigos",
+                "Posibilidad de volverse dependiente"
+            ],
+            cocaina: [
+                "Sentirse muy ansioso, paranoico o irritable",
+                "No poder dormir bien",
+                "Problemas del corazón (palpitaciones, presión alta)",
+                "Daño en la nariz si se inhala",
+                "Gastar mucho dinero",
+                "Actuar sin pensar o ponerse agresivo",
+                "Alto riesgo de dependencia (necesitarla siempre)"
+            ],
+            anfetaminas: [ // Incluye Éxtasis
+                "Sentirse ansioso, agitado, paranoico",
+                "No poder dormir, sentirse muy cansado después",
+                "Cambios fuertes de humor, sentirse deprimido cuando pasa el efecto",
+                "Problemas del corazón, golpes de calor (con éxtasis)",
+                "No tener hambre, deshidratarse",
+                "Actuar de forma extraña o agresiva"
+             ],
+            inhalantes: [
+                "Mareos, confusión, no poder coordinar bien los movimientos",
+                "Daño permanente en el cerebro si se usa mucho",
+                "Daño en órganos importantes (hígado, riñones, corazón)",
+                "Problemas para respirar",
+                "Perder el conocimiento, riesgo de muerte repentina"
+            ],
+             sedantes: [ // Tranquilizantes, pastillas dormir
+                "Mucho sueño, confusión, dificultad para concentrarse",
+                "Problemas de memoria",
+                "Riesgo de caídas o accidentes",
+                "Dependencia (el cuerpo y la mente la piden)",
+                "Riesgo alto de sobredosis (dejar de respirar), especialmente si se mezcla con alcohol u opiáceos"
+            ],
+            alucinogenos: [
+                "Tener 'malos viajes' (sentir mucho miedo o pánico)",
+                "Ver o sentir cosas raras que no se quitan (es raro, pero pasa)",
+                "Hacer cosas peligrosas sin darse cuenta mientras dura el efecto",
+                "Puede despertar problemas mentales si ya existía una tendencia"
+            ],
+             opiaceos: [
+                "Mucho sueño, confusión",
+                "Estreñimiento, náuseas",
+                "Riesgo muy alto de volverse dependiente rápidamente",
+                "Riesgo muy alto de sobredosis (respiración muy lenta o parada), más aún si se inyecta o mezcla"
+            ],
+             otras: [
+                 "Los riesgos dependen de qué sustancia sea",
+                 "Efectos desconocidos, mezclas peligrosas"
+             ]
+        };
+
+        // --- Intervention text based on PDF ---
+        const interventionText = {
+            none: "Sin intervención", // Added for clarity
+            low: "Sin intervención",
+            moderate: "Intervención Breve",
+            high: "Tratamiento más intensivo*",
+            injection_recent: "Requiere mayor evaluación y tratamiento más intensivo*",
+            injection_past: "Intervención Breve" // PDF doesn't explicitly mention the card here, just IB
+        };
+        const interventionNote = "*UNA MAYOR EVALUACIÓN Y UN TRATAMIENTO MÁS INTENSIVO pueden ser proporcionados por profesionales de la salud en el ámbito de atención primaria, o por un servicio especializado para las adicciones si está disponible.";
+
+
+        function getScore(question, substanceKey) {
+            const selector = `input[name="q${question}_${substanceKey}"]:checked`;
+            const selected = document.querySelector(selector);
+            if (question === 1) {
+                 return selected ? parseInt(selected.value) : 0;
+            }
+            if (question === 7) {
+                 return selected ? parseInt(selected.value) : 0;
+            }
+            return selected ? parseInt(selected.value) : 0;
+        }
+
+         function checkQ1() {
+             let anyQ1Yes = false;
+             const q1Radios = document.querySelectorAll('input[name^="q1_"]');
+             q1Radios.forEach(radio => {
+                 if (radio.checked && radio.value === '3') {
+                     anyQ1Yes = true;
+                 }
+             });
+
+             const q2to7Div = document.getElementById('questions-2-to-7');
+             const q1NoMsgDiv = document.getElementById('q1-no-message');
+             const calcButton = document.getElementById('calculateButton');
+
+             if (!anyQ1Yes) {
+                 q2to7Div.classList.add('hidden');
+                 q1NoMsgDiv.classList.remove('hidden');
+                 if (calcButton) calcButton.classList.add('hidden');
+                 document.getElementById('results').classList.add('hidden');
+                 document.getElementById('feedbackCard').classList.add('hidden');
+             } else {
+                 q2to7Div.classList.remove('hidden');
+                 q1NoMsgDiv.classList.add('hidden');
+                 if (calcButton) calcButton.classList.remove('hidden');
+                 checkQ2();
+             }
+         }
+
+         function checkQ2() {
+             if (document.getElementById('questions-2-to-7').classList.contains('hidden')) {
+                 return;
+             }
+
+             let anyQ2Consumed = false;
+             const q2Radios = document.querySelectorAll('input[name^="q2_"]');
+             q2Radios.forEach(radio => {
+                 if (radio.checked && parseInt(radio.value) > 0) {
+                     anyQ2Consumed = true;
+                 }
+             });
+
+             const q3to5Div = document.getElementById('questions-3-to-5');
+             const q2NoMsgDiv = document.getElementById('q2-no-message');
+
+             if (!anyQ2Consumed) {
+                 q3to5Div.classList.add('hidden');
+                 q2NoMsgDiv.classList.remove('hidden');
+             } else {
+                 q3to5Div.classList.remove('hidden');
+                 q2NoMsgDiv.classList.add('hidden');
+             }
+         }
+
+        function calculateASSIST() {
+            if (document.getElementById('questions-2-to-7').classList.contains('hidden')) {
+                 alert("Por favor, responde primero a la Pregunta 1.");
+                 return;
+             }
+
+            let scores = {};
+            let injectionValue = getScore(7, 'inyectada');
+            let q2AllNever = true;
+
+            for (const key in substances) {
+                let score = 0;
+                const q2Score = getScore(2, key);
+                 if (q2Score > 0) {
+                    q2AllNever = false;
+                }
+                score += q2Score;
+
+                if (!q2AllNever) {
+                    score += getScore(3, key);
+                    score += getScore(4, key);
+                    if (substances[key].q5Applies) {
+                       score += getScore(5, key);
+                    }
+                }
+                score += getScore(6, key);
+                scores[key] = score;
+            }
+
+            displayResults(scores, injectionValue);
+            generateFeedbackCard(scores, injectionValue);
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+         function getRiskLevel(score, thresholds) {
+             if (score === 0 && thresholds.low === 0) {
+                 return { level: 'Bajo', class: 'risk-low', feedbackClass: 'feedback-risk-low', intervention: interventionText.low };
+             } else if (score > thresholds.low && score <= thresholds.moderate) {
+                 return { level: 'Moderado', class: 'risk-moderate', feedbackClass: 'feedback-risk-moderate', intervention: interventionText.moderate };
+            } else if (score > thresholds.moderate) {
+                 return { level: 'Alto', class: 'risk-high', feedbackClass: 'feedback-risk-high', intervention: interventionText.high };
+            } else if (score > 0 && score <= thresholds.low) {
+                 return { level: 'Bajo', class: 'risk-low', feedbackClass: 'feedback-risk-low', intervention: interventionText.low };
+            } else {
+                return { level: 'Bajo', class: 'risk-low', feedbackClass: 'feedback-risk-low', intervention: interventionText.low };
+            }
+        }
+
+         function getInterpretationText(level, intervention) {
+             let text = '';
+             switch (level) {
+                 case 'Bajo': text = 'Tu nivel de consumo actual probablemente no representa un riesgo significativo.'; break;
+                 case 'Moderado': text = 'Tu nivel de consumo actual te pone en riesgo de problemas (salud, estudios, relaciones).'; break;
+                 case 'Alto': text = 'Tu nivel de consumo actual es riesgoso y probablemente te está causando problemas.'; break;
+             }
+             if (intervention !== interventionText.low) {
+                text += ` <strong>Intervención sugerida: ${intervention}</strong>`;
+             }
+             return text;
+         }
+
+        function displayResults(scores, injectionValue) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<h2>Resultados del Cuestionario ASSIST Young</h2>';
+            resultsDiv.classList.remove('hidden');
+            let consumedEver = false;
+            let needsIntensiveTreatmentNote = false;
+
+            for (const key in scores) {
+                 const q1Score = getScore(1, key);
+                 if (q1Score > 0) {
+                    consumedEver = true;
+                    const score = scores[key];
+                    const substanceInfo = substances[key];
+                    const riskInfo = getRiskLevel(score, substanceInfo.thresholds);
+
+                     if (riskInfo.intervention.includes('*')) {
+                         needsIntensiveTreatmentNote = true;
+                     }
+
+                    const resultItem = document.createElement('div');
+                    resultItem.classList.add('result-item', score === 0 ? 'risk-none' : riskInfo.class);
+                    resultItem.innerHTML = `
+                        <strong>${substanceInfo.name}:</strong> Puntuación ${score} - <strong>Nivel de Riesgo: ${riskInfo.level}</strong>
+                        <div class="interpretation">${getInterpretationText(riskInfo.level, riskInfo.intervention)}</div>
+                    `;
+                    resultsDiv.appendChild(resultItem);
+                }
+            }
+
+             if (consumedEver) {
+                let injectionText = '';
+                let injectionClass = 'risk-none';
+                let injectionIntervention = '';
+
+                if (injectionValue === 6) {
+                    injectionText = `Has indicado que te has inyectado drogas en los últimos 3 meses. Esto representa un <strong>riesgo muy alto</strong>.`;
+                    injectionClass = 'risk-injection';
+                    injectionIntervention = interventionText.injection_recent;
+                    needsIntensiveTreatmentNote = true;
+                } else if (injectionValue === 1) {
+                    injectionText = `Has indicado que te inyectaste drogas en el pasado (pero no en los últimos 3 meses).`;
+                     injectionClass = 'risk-moderate';
+                     injectionIntervention = interventionText.injection_past;
+                } else {
+                    injectionText = `No has indicado consumo de drogas por vía inyectada.`;
+                    injectionIntervention = interventionText.none;
+                }
+
+                const injectionItem = document.createElement('div');
+                injectionItem.classList.add('result-item', injectionClass);
+                 let interpretationHTML = '';
+                 if (injectionIntervention !== interventionText.none) {
+                     interpretationHTML = `<div class="interpretation"><strong>Intervención sugerida: ${injectionIntervention}</strong></div>`;
+                 }
+                injectionItem.innerHTML = `
+                    <strong>Consumo Inyectado:</strong> ${injectionText}
+                    ${interpretationHTML}
+                `;
+                resultsDiv.appendChild(injectionItem);
+
+                 if (needsIntensiveTreatmentNote) {
+                     const noteDiv = document.createElement('p');
+                     noteDiv.style.fontSize = '0.85em';
+                     noteDiv.style.marginTop = '15px';
+                     noteDiv.innerHTML = `<em>${interventionNote}</em>`;
+                     resultsDiv.appendChild(noteDiv);
+                 }
+            }
+        }
+
+
+        function generateFeedbackCard(scores, injectionValue) {
+            const cardDiv = document.getElementById('feedbackCard');
+            cardDiv.innerHTML = '';
+
+            let consumedEver = Object.keys(substances).some(key => getScore(1, key) > 0);
+            if (!consumedEver) {
+                cardDiv.classList.add('hidden');
+                return;
+            }
+            cardDiv.classList.remove('hidden');
+
+            let cardHTML = `<h2 class="feedback-title">Tarjeta de Retroalimentación ASSIST Young</h2>`;
+            cardHTML += `<div class="feedback-section"><h3>Tus Puntuaciones y Niveles de Riesgo</h3><ul class="feedback-list">`;
+            let moderateOrHighRisksExist = false;
+            let interventionNeeded = false;
+            let needsIntensiveTreatmentNoteFB = false;
+
+            for (const key in scores) {
+                 const q1Score = getScore(1, key);
+                 if (q1Score > 0) {
+                     const score = scores[key];
+                     const substanceInfo = substances[key];
+                     const riskInfo = getRiskLevel(score, substanceInfo.thresholds);
+                     if (riskInfo.level === 'Moderado' || riskInfo.level === 'Alto') {
+                         moderateOrHighRisksExist = true;
+                     }
+                      if (riskInfo.intervention !== interventionText.low) {
+                         interventionNeeded = true;
+                     }
+                     if (riskInfo.intervention.includes('*')) {
+                         needsIntensiveTreatmentNoteFB = true;
+                     }
+                     cardHTML += `<li class="${score === 0 ? 'feedback-risk-none' : riskInfo.feedbackClass}"><strong>${substanceInfo.name}:</strong> Puntuación ${score} (${riskInfo.level}) - <i>${riskInfo.intervention}</i></li>`;
+                 }
+            }
+             let injectionStatusText = "No indicado";
+             let injectionRiskClass = "feedback-risk-none";
+             let injectionInterventionText = interventionText.none;
+             if (injectionValue === 6) {
+                 injectionStatusText = "Sí, reciente";
+                 injectionRiskClass = "feedback-injection";
+                 injectionInterventionText = interventionText.injection_recent;
+                 interventionNeeded = true;
+                 needsIntensiveTreatmentNoteFB = true;
+             } else if (injectionValue === 1) {
+                 injectionStatusText = "Sí, en el pasado";
+                 injectionRiskClass = "feedback-risk-moderate";
+                 injectionInterventionText = interventionText.injection_past;
+                 interventionNeeded = true;
+             }
+             cardHTML += `<li class="${injectionRiskClass}"><strong>Consumo Inyectado:</strong> ${injectionStatusText} - <i>${injectionInterventionText}</i></li>`;
+             cardHTML += `</ul>`;
+             if (needsIntensiveTreatmentNoteFB) {
+                  cardHTML += `<p style="font-size: 0.85em; margin-top: 10px;"><em>${interventionNote}</em></p>`;
+             }
+             cardHTML += `</div>`;
+
+             cardHTML += `<div class="feedback-section"><h3>¿Qué significan estos niveles?</h3>`;
+             cardHTML += `<p><strong class="feedback-risk-low">Riesgo Bajo:</strong> Generalmente indica que tu consumo actual tiene baja probabilidad de causarte problemas. ¡Sigue así!</p>`;
+             cardHTML += `<p><strong class="feedback-risk-moderate">Riesgo Moderado:</strong> Tu consumo actual te pone en riesgo de problemas (salud, estudios, relaciones). Es un buen momento para pensar en reducir o parar.</p>`;
+             cardHTML += `<p><strong class="feedback-risk-high">Riesgo Alto:</strong> Tu consumo es peligroso y probablemente ya te causa problemas o podría causarlos pronto. Es muy importante buscar ayuda.</p>`;
+             cardHTML += `</div>`;
+
+            if (moderateOrHighRisksExist) {
+                cardHTML += `<div class="feedback-section"><h3>Posibles Riesgos Asociados a tu Consumo (Riesgo Moderado/Alto)</h3><ul class="feedback-list">`;
+                for (const key in scores) {
+                    const q1Score = getScore(1, key);
+                    if (q1Score > 0) {
+                        const score = scores[key];
+                        const substanceInfo = substances[key];
+                        const riskInfo = getRiskLevel(score, substanceInfo.thresholds);
+                        if (riskInfo.level === 'Moderado' || riskInfo.level === 'Alto') {
+                            cardHTML += `<li><strong class="${riskInfo.feedbackClass}">${substanceInfo.name} (${riskInfo.level}):</strong><ul>`;
+                            if (risksData[key]) {
+                                 risksData[key].slice(0, 3).forEach(risk => {
+                                     cardHTML += `<li>${risk}</li>`;
+                                 });
+                            } else {
+                                cardHTML += `<li>Consulta con un profesional sobre los riesgos específicos.</li>`;
+                            }
+                            cardHTML += `</ul></li>`;
+                        }
+                    }
+                }
+                 cardHTML += `</ul></div>`;
+            }
+
+             if (injectionValue === 6) {
+                 cardHTML += `<div class="feedback-section"><h3>¡MUY IMPORTANTE! Consumo Inyectado Reciente</h3>`;
+                 cardHTML += `<p class="feedback-injection">El consumo inyectado reciente tiene <strong>riesgos muy altos</strong> para tu salud (VIH, Hepatitis, sobredosis, dependencia).</p>`;
+                 cardHTML += `<p class="feedback-injection"><strong>Es fundamental que busques ayuda especializada de inmediato.</strong> Habla con un profesional sobre tratamiento y cómo reducir los daños.</p>`;
+                 cardHTML += `</div>`;
+             } else if (injectionValue === 1) {
+                 cardHTML += `<div class="feedback-section"><h3>Consumo Inyectado en el Pasado</h3>`;
+                 cardHTML += `<p class="feedback-risk-moderate">Indicaste consumo inyectado en el pasado. Aunque no sea reciente, es importante ser consciente de los riesgos asociados y evitar recaer en esa práctica. Habla con un profesional si sientes la tentación de volver a inyectarte.</p>`;
+                 cardHTML += `</div>`;
+             }
+
+             if (interventionNeeded || injectionValue > 0) {
+                 cardHTML += `<div class="feedback-section"><h3>¿Qué hacer ahora?</h3>`;
+                 cardHTML += `<p>Reflexiona sobre estos resultados. Si tu riesgo es moderado o alto, te preocupa tu consumo, o has consumido por inyección:</p>`;
+                 cardHTML += `<ul class="feedback-list">
+                                <li>Considera reducir o detener el consumo de las sustancias con mayor riesgo.</li>
+                                <li>Habla con alguien de confianza: un familiar, un amigo, un profesor, o un profesional de la salud.</li>
+                                <li>Busca información confiable sobre los efectos y riesgos.</li>
+                                <li>Si decides hacer cambios, piensa en estrategias: evitar situaciones de riesgo, buscar actividades alternativas, pedir apoyo.</li>
+                                <li><strong>Si el riesgo es alto o te has inyectado (reciente o pasado), busca ayuda profesional.</strong></li>
+                              </ul>`;
+                cardHTML += `<p><strong>Recuerda:</strong> Esta información es para ti. La decisión de hacer cambios es tuya, pero no estás solo/a para buscar ayuda.</p>`;
+                 cardHTML += `</div>`;
+             } else {
+                 cardHTML += `<div class="feedback-section"><h3>Próximos Pasos</h3>`;
+                 cardHTML += `<p class="feedback-risk-low">Tus resultados indican un bajo riesgo general. ¡Excelente! Sigue tomando decisiones saludables y cuidándote.</p>`;
+                 cardHTML += `</div>`;
+             }
+
+            cardDiv.innerHTML = cardHTML;
+        }
+
+         window.onload = function() {
+             checkQ1();
+         };
+
+    </script>
+
+<div class="footer">
+    <p>Implementación online del ASSIST creada por Carlos Vélez con la Ayuda de Gemini AI</p>
+    <p>Fundación Universitaria Konrad Lorenz</p>
+    <p>Consumo de SPA en adolescentes</p>
+</div>
+
+</body>
+</html>

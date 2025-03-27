@@ -45,6 +45,12 @@ def blog(request):
 def em(request):
     return render(request,'mi_sitio/em.html')
 
+def assist(request):
+    return render(request,'mi_sitio/assist.html')
+
+def intervencion_breve(request):
+    return render(request,'mi_sitio/intervencion_breve.html')
+
 def michael_view(request):
     """View for the Michael Scott chatbot page"""
     return render(request, 'mi_sitio/michael.html')
