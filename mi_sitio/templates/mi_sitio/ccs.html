@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario Breve de Confianza Situacional</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --primary-dark: #2980b9;
+            --secondary-color: #2c3e50;
+            --background-color: #f9f9f9;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .personal-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            flex: 1 1 200px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .instructions {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .instructions h2 {
+            color: var(--primary-dark);
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .instructions p {
+            margin-bottom: 10px;
+        }
+
+        .situation {
+            background-color: #f7f7f7;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .situation:hover {
+            transform: translateY(-5px);
+        }
+
+        .situation h3 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .situation h3 span {
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .slider-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: linear-gradient(to right, #ff4c4c, #3498db, #8bc34a);
+            outline: none;
+            transition: opacity 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .slider-value {
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--primary-dark);
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto 0;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .results h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .chart-container {
+            margin-top: 30px;
+            height: 400px;
+        }
+
+        .bar-chart {
+            display: flex;
+            height: 300px;
+            align-items: flex-end;
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .bar {
+            flex: 1;
+            background-color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            border-radius: 5px 5px 0 0;
+            transition: height 0.5s ease;
+            position: relative;
+            min-width: 20px;
+        }
+
+        .bar.low-confidence {
+            background-color: #e74c3c;
+        }
+
+        .bar-label {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 80%;
+            color: white;
+            font-size: 12px;
+            padding: 5px 2px;
+            text-align: center;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .x-axis {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .x-label {
+            text-align: center;
+            font-size: 12px;
+            width: 30px;
+            word-wrap: break-word;
+        }
+
+        .y-axis {
+            position: absolute;
+            left: -40px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .y-label {
+            font-size: 12px;
+        }
+
+        .chart-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+
+        .chart-legends {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+
+        .legend-normal {
+            background-color: var(--primary-color);
+        }
+
+        .legend-low {
+            background-color: #e74c3c;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f1f3f5;
+            border-top: 1px solid #dee2e6;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            .personal-info {
+                flex-direction: column;
+            }
+
+            .form-group {
+                flex: 1 1 100%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .bar-chart {
+                margin-left: 30px;
+            }            
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cuestionario Breve de Confianza Situacional</h1>
+            <div class="personal-info">
+                <div class="form-group">
+                    <label for="edad">Edad:</label>
+                    <input type="number" id="edad" name="edad" min="12" max="100">
+                </div>
+                <div class="form-group">
+                    <label for="sexo">Sexo:</label>
+                    <input type="text" id="sexo" name="sexo">
+                </div>
+                <div class="form-group">
+                    <label for="escolaridad">Escolaridad:</label>
+                    <input type="text" id="escolaridad" name="escolaridad">
+                </div>
+            </div>
+        </header>
+
+        <div class="instructions">
+            <h2>INSTRUCCIONES:</h2>
+            <p>A continuación se presentan ocho diferentes situaciones o eventos ante los que algunas personas tienen problemas por su forma de beber o consumir alguna droga.</p>
+            <p>Imagínate que estás en este momento en cada una de estas situaciones e indica en la escala qué tan seguro te sientes de poder resistir la necesidad de beber en exceso o consumir alguna droga, donde 0% significa "DEFINITIVAMENTE CONSUMIRÍA" ante esa situación y 100% significa "DEFINITIVAMENTE NO CONSUMIRÍA" en esa situación.</p>
+        </div>
+
+        <form id="confianzaForm">
+            <div class="situation">
+                <h3><span>1</span> Emociones desagradables:</h3>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>0% Definitivamente consumiría</span>
+                        <span>100% Definitivamente no consumiría</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="situacion1">
+                    <div class="slider-value">Valor: <span id="situacion1Value">50</span>%</div>
+                </div>
+            </div>
+
+            <div class="situation">
+                <h3><span>2</span> Malestar físico:</h3>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>0% Definitivamente consumiría</span>
+                        <span>100% Definitivamente no consumiría</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="situacion2">
+                    <div class="slider-value">Valor: <span id="situacion2Value">50</span>%</div>
+                </div>
+            </div>
+
+            <div class="situation">
+                <h3><span>3</span> Emociones agradables:</h3>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>0% Definitivamente consumiría</span>
+                        <span>100% Definitivamente no consumiría</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="situacion3">
+                    <div class="slider-value">Valor: <span id="situacion3Value">50</span>%</div>
+                </div>
+            </div>
+
+            <div class="situation">
+                <h3><span>4</span> Probando mi control sobre el consumo de alcohol o drogas:</h3>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>0% Definitivamente consumiría</span>
+                        <span>100% Definitivamente no consumiría</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="situacion4">
+                    <div class="slider-value">Valor: <span id="situacion4Value">50</span>%</div>
+                </div>
+            </div>
+
+            <div class="situation">
+                <h3><span>5</span> Necesidad física:</h3>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>0% Definitivamente consumiría</span>
+                        <span>100% Definitivamente no consumiría</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="situacion5">
+                    <div class="slider-value">Valor: <span id="situacion5Value">50</span>%</div>
+                </div>
+            </div>
+
+            <div class="situation">
+                <h3><span>6</span> Conflicto con otros:</h3>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>0% Definitivamente consumiría</span>
+                        <span>100% Definitivamente no consumiría</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="situacion6">
+                    <div class="slider-value">Valor: <span id="situacion6Value">50</span>%</div>
+                </div>
+            </div>
+
+            <div class="situation">
+                <h3><span>7</span> Presión social:</h3>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>0% Definitivamente consumiría</span>
+                        <span>100% Definitivamente no consumiría</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="situacion7">
+                    <div class="slider-value">Valor: <span id="situacion7Value">50</span>%</div>
+                </div>
+            </div>
+
+            <div class="situation">
+                <h3><span>8</span> Momentos agradables con otros:</h3>
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>0% Definitivamente consumiría</span>
+                        <span>100% Definitivamente no consumiría</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="situacion8">
+                    <div class="slider-value">Valor: <span id="situacion8Value">50</span>%</div>
+                </div>
+            </div>
+
+            <button type="button" class="submit-btn" id="submitBtn">Ver Resultados</button>
+        </form>
+
+        <div class="results" id="results">
+            <h2>Resultados del Cuestionario</h2>
+            <div id="resultsList"></div>
+            
+            <div class="chart-container">
+                <h3 class="chart-title">Gráfico de Confianza Situacional</h3>
+                <div style="position: relative;">
+                    <div class="bar-chart" id="barChart"></div>
+                </div>
+                
+                <div class="chart-legends">
+                    <div class="legend-item">
+                        <div class="legend-color legend-normal"></div>
+                        <span>Mayor confianza</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-low"></div>
+                        <span>Menor confianza</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Actualizar los valores de los sliders en tiempo real
+        const sliders = document.querySelectorAll('.slider');
+        
+        sliders.forEach(slider => {
+            const valueDisplay = document.getElementById(`${slider.id}Value`);
+            
+            slider.addEventListener('input', function() {
+                valueDisplay.textContent = this.value;
+            });
+        });
+
+        // Mostrar resultados al hacer click en el botón
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const results = document.getElementById('results');
+            const resultsList = document.getElementById('resultsList');
+            const barChart = document.getElementById('barChart');
+            
+            // Limpiar resultados anteriores
+            resultsList.innerHTML = '';
+            barChart.innerHTML = '';
+            
+            // Obtener situaciones y puntajes
+            const situations = [
+                "Emociones desagradables",
+                "Malestar físico",
+                "Emociones agradables",
+                "Probando mi control",
+                "Necesidad física",
+                "Conflicto con otros",
+                "Presión social",
+                "Momentos agradables"
+            ];
+            
+            const scores = [];
+            
+            sliders.forEach((slider, index) => {
+                const score = parseInt(slider.value);
+                scores.push({
+                    index: index,
+                    situation: situations[index],
+                    score: score
+                });
+                
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.innerHTML = `
+                    <div>${index + 1}. ${situations[index]}</div>
+                    <div><strong>${score}%</strong></div>
+                `;
+                
+                resultsList.appendChild(resultItem);
+            });
+            
+            // Ordenar puntajes para encontrar los 3 más bajos
+            const sortedScores = [...scores].sort((a, b) => a.score - b.score);
+            const lowestThree = sortedScores.slice(0, 3).map(item => item.index);
+            
+            // Crear gráfico de barras
+            scores.forEach((item, index) => {
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                const height = (item.score / 100) * 300;
+                bar.style.height = `${height}px`;
+                
+                // Marcar las 3 situaciones con menor confianza
+                if (lowestThree.includes(index)) {
+                    bar.classList.add('low-confidence');
+                }
+                
+                const barLabel = document.createElement('div');
+                barLabel.className = 'bar-label';
+                barLabel.textContent = item.situation;
+                
+                const barValue = document.createElement('div');
+                barValue.className = 'bar-value';
+                barValue.textContent = `${item.score}%`;
+                
+                bar.appendChild(barLabel);
+                bar.appendChild(barValue);
+                barChart.appendChild(bar);
+            });
+            
+            // Mostrar resultados
+            results.style.display = 'block';
+            
+            // Scroll a resultados
+            results.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+    <div class="footer">
+        <p>Implementación online de del Cuestionario Breve de Confianza Situacional creada por Carlos Vélez con la Ayuda de Claude AI</p>
+        <p>Sólo para propósitos pedagógicos</p>
+        <p>Fundación Universitaria Konrad Lorenz</p>
+        <p>Consumo de SPA en adolescentes</p>
+    </div>
+</body>
+</html>

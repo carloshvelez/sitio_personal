@@ -51,6 +51,12 @@ def assist(request):
 def intervencion_breve(request):
     return render(request,'mi_sitio/intervencion_breve.html')
 
+def libare(request):
+    return render(request,'mi_sitio/libare.html')
+
+def ccs(request):
+    return render(request,'mi_sitio/ccs.html')
+
 def michael_view(request):
     """View for the Michael Scott chatbot page"""
     return render(request, 'mi_sitio/michael.html')

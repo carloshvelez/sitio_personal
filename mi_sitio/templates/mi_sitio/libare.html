@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Línea Base Retrospectiva</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <!-- Removed Recharts and added Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.8.1/prop-types.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.21.2/babel.min.js"></script>
+  <!-- Add styles -->
+  <style>
+    :root {
+      --color-primary: #7c3aed;
+      --color-primary-hover: #6d28d9;
+      --color-secondary: #e5e7eb;
+      --color-danger: #f87171;
+      --color-danger-light: #fee2e2;
+      --color-danger-dark: #991b1b;
+      --color-blue: #3b82f6;
+      --color-blue-light: #dbeafe;
+      --color-blue-dark: #1e40af;
+      --radius: 0.5rem;
+      --transition: all 0.3s ease;
+    }
+    
+    .dark {
+      --color-primary: #8b5cf6;
+      --color-primary-hover: #7c3aed;
+      --bg-color: #111827;
+      --text-color: #f3f4f6;
+      --card-bg: #1f2937;
+      --input-bg: #374151;
+      --border-color: #4b5563;
+    }
+    
+    .light {
+      --color-primary: #7c3aed;
+      --color-primary-hover: #6d28d9;
+      --bg-color: #ffffff;
+      --text-color: #111827;
+      --card-bg: #f9fafb;
+      --input-bg: #ffffff;
+      --border-color: #e5e7eb;
+    }
+    
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: var(--transition);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+    
+    .card {
+      background-color: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+    
+    input, select, button {
+      background-color: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      border-radius: var(--radius);
+      padding: 0.5rem;
+      transition: var(--transition);
+    }
+    
+    button {
+      cursor: pointer;
+    }
+    
+    button:hover {
+      opacity: 0.9;
+    }
+    
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--color-primary-hover);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--border-color);
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    .high-consumption {
+      background-color: var(--color-blue-light);
+      border-color: var(--color-blue);
+    }
+    
+    .dark .high-consumption {
+      background-color: var(--color-blue-dark);
+      border-color: var(--color-blue);
+    }
+    
+    .dark {
+      --color-primary: #8b5cf6;
+      --color-primary-hover: #7c3aed;
+      --bg-color: #111827;
+      --text-color: #f3f4f6;
+      --card-bg: #1f2937;
+      --input-bg: #374151;
+      --border-color: #4b5563;
+    }
+    
+    .light {
+      --color-primary: #7c3aed;
+      --color-primary-hover: #6d28d9;
+      --bg-color: #ffffff;
+      --text-color: #111827;
+      --card-bg: #f9fafb;
+      --input-bg: #ffffff;
+      --border-color: #e5e7eb;
+    }
+    
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: var(--transition);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+    
+    .card {
+      background-color: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+    
+    input, select, button {
+      background-color: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      border-radius: var(--radius);
+      padding: 0.5rem;
+      transition: var(--transition);
+    }
+    
+    button {
+      cursor: pointer;
+    }
+    
+    button:hover {
+      opacity: 0.9;
+    }
+    
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--color-primary-hover);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--border-color);
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    .high-consumption {
+      background-color: var(--color-danger-light);
+      border-color: var(--color-danger);
+    }
+    
+    .dark .high-consumption {
+      background-color: var(--color-danger-dark);
+      border-color: var(--color-danger);
+    }
+    
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+    }
+    
+    .modal-content {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: var(--radius);
+      max-width: 500px;
+      width: 100%;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    
+    .substance-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+    }
+    
+    /* Tooltip styles */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 120px;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      text-align: center;
+      border-radius: var(--radius);
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--border-color);
+    }
+
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f1f3f5;
+            border-top: 1px solid #dee2e6;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+  </style>
+</head>
+<body class="light">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+    
+    // Check if Chart.js is loaded
+    const isChartJsLoaded = () => {
+      return typeof Chart !== 'undefined';
+    };
+    
+    // Icons remain the same
+    const MoonIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    );
+
+    const SunIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+    );
+
+    const WineIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 22h8"></path>
+        <path d="M12 11v11"></path>
+        <path d="M7 6c0-1 .5-4 5-4s5 3 5 4c0 2-2 3-5 3s-5-1-5-3z"></path>
+        <path d="M12 7c0 .5.1 1 .5 1A.5.5 0 0 0 13 7.5V7a1 1 0 0 0-1-1h-.5a.5.5 0 0 0-.5.5"></path>
+      </svg>
+    );
+
+    const CigaretteIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M18 12H2v4h16"></path>
+        <path d="M22 12v4"></path>
+        <path d="M7 12v4"></path>
+        <path d="M18 8c0-2.5-2-2.5-2-5"></path>
+        <path d="M22 8c0-2.5-2-2.5-2-5"></path>
+      </svg>
+    );
+
+    const DropletsIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"></path>
+        <path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"></path>
+      </svg>
+    );
+
+    const WindIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path>
+      </svg>
+    );
+
+    const CloseIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    );
+
+    const NotesIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 11h4"></path>
+        <path d="M12 16h4"></path>
+        <path d="M8 11h.01"></path>
+        <path d="M8 16h.01"></path>
+        <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+      </svg>
+    );
+
+    const DownloadIcon = () => (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+    );
+
+    const LineaBaseRetrospectiva = () => {
+      const [selectedSubstance, setSelectedSubstance] = useState('alcohol');
+      const [calendarData, setCalendarData] = useState([]);
+      const [chartData, setChartData] = useState([]);
+      const [patientName, setPatientName] = useState('');
+      const [patientId, setPatientId] = useState('');
+      const [patientAge, setPatientAge] = useState('');
+      const [theme, setTheme] = useState('light');
+      const [showModal, setShowModal] = useState(false);
+      const [currentNote, setCurrentNote] = useState({ date: null, note: '' });
+      const [viewType, setViewType] = useState('calendar'); // calendar, weekly, monthly
+      
+      // Add refs for Chart.js charts
+      const weeklyChartRef = useRef(null);
+      const monthlyChartRef = useRef(null);
+      const weeklyChartInstance = useRef(null);
+      const monthlyChartInstance = useRef(null);
+
+      // Sustancias disponibles
+      const substances = [
+        { id: 'alcohol', name: 'Alcohol', icon: <WineIcon /> },
+        { id: 'marihuana', name: 'Cannabis', icon: <CigaretteIcon /> },
+        { id: 'cocaina', name: 'Cocaína', icon: <DropletsIcon /> },
+        { id: 'inhalables', name: 'Inhalables', icon: <WindIcon /> }
+      ];
+
+      useEffect(() => {
+        document.body.className = theme;
+      }, [theme]);
+
+      useEffect(() => {
+        const endDate = new Date();
+        const startDate = new Date(endDate);
+        startDate.setMonth(startDate.getMonth() - 3);
+        startDate.setDate(1);
+
+        const dates = [];
+        let currentDate = new Date(startDate);
+
+        while (currentDate <= endDate) {
+          dates.push({
+            date: new Date(currentDate),
+            consumption: 0, // Inicializar con consumo en 0 en lugar de datos aleatorios
+            note: '',
+          });
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        setCalendarData(dates);
+      }, []);
+
+      // Función para limpiar todos los datos
+      const clearAllData = () => {
+        if (confirm('¿Estás seguro de que deseas limpiar todos los datos? Esta acción no se puede deshacer.')) {
+          // Reiniciar datos del calendario
+          const newCalendarData = calendarData.map(item => ({
+            ...item,
+            consumption: 0,
+            note: ''
+          }));
+          
+          setCalendarData(newCalendarData);
+          setPatientName('');
+          setPatientId('');
+          setPatientAge('');
+        }
+      };
+
+      useEffect(() => {
+        const weeklyData = calendarData.reduce((acc, item) => {
+          const weekNumber = getWeekNumber(item.date);
+          const weekStart = getWeekStart(item.date);
+          if (!acc[weekNumber]) {
+            acc[weekNumber] = { weekStart, totalConsumption: 0, days: 0 };
+          }
+          acc[weekNumber].totalConsumption += item.consumption;
+          if (item.consumption > 0) acc[weekNumber].days += 1;
+          return acc;
+        }, {});
+
+        const newChartData = Object.entries(weeklyData).map(([weekNumber, data]) => ({
+          weekStart: formatDate(data.weekStart),
+          consumption: data.totalConsumption,
+          daysWithConsumption: data.days
+        }));
+
+        setChartData(newChartData);
+      }, [calendarData]);
+      
+      // Add effect to render charts when view type or data changes
+      useEffect(() => {
+        if (viewType === 'weekly' && isChartJsLoaded()) {
+          setTimeout(() => renderWeeklyChart(), 100);
+        } else if (viewType === 'monthly' && isChartJsLoaded()) {
+          setTimeout(() => renderMonthlyChart(), 100);
+        }
+      }, [viewType, chartData, theme]);
+
+      // Add function to render weekly chart with Chart.js
+      const renderWeeklyChart = () => {
+        if (!weeklyChartRef.current) return;
+        
+        if (weeklyChartInstance.current) {
+          weeklyChartInstance.current.destroy();
+        }
+        
+        const ctx = weeklyChartRef.current.getContext('2d');
+        
+        const labels = chartData.map(item => item.weekStart);
+        const consumptionData = chartData.map(item => item.consumption);
+        const daysData = chartData.map(item => item.daysWithConsumption);
+        
+        const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim() || '#7c3aed';
+        const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() || '#111827';
+        const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim() || '#e5e7eb';
+        
+        weeklyChartInstance.current = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: 'Consumo Total',
+                data: consumptionData,
+                backgroundColor: primaryColor,
+                borderColor: primaryColor,
+                borderWidth: 1
+              },
+              {
+                label: 'Días con Consumo',
+                data: daysData,
+                backgroundColor: '#f87171',
+                borderColor: '#f87171',
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: {
+                  color: borderColor
+                },
+                ticks: {
+                  color: textColor
+                }
+              },
+              x: {
+                grid: {
+                  color: borderColor
+                },
+                ticks: {
+                  color: textColor
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  color: textColor
+                }
+              }
+            }
+          }
+        });
+      };
+      
+      // Add function to render monthly chart
+      const renderMonthlyChart = () => {
+        if (!monthlyChartRef.current) return;
+        
+        if (monthlyChartInstance.current) {
+          monthlyChartInstance.current.destroy();
+        }
+        
+        const ctx = monthlyChartRef.current.getContext('2d');
+        const monthlyData = getMonthlyData();
+        
+        const labels = monthlyData.map(item => `${item.month} ${item.year}`);
+        const consumptionData = monthlyData.map(item => item.totalConsumption);
+        const daysData = monthlyData.map(item => item.daysWithConsumption);
+        
+        const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim() || '#7c3aed';
+        const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() || '#111827';
+        const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim() || '#e5e7eb';
+        
+        monthlyChartInstance.current = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: 'Consumo Total',
+                data: consumptionData,
+                backgroundColor: primaryColor,
+                borderColor: primaryColor,
+                borderWidth: 1
+              },
+              {
+                label: 'Días con Consumo',
+                data: daysData,
+                backgroundColor: '#f87171',
+                borderColor: '#f87171',
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: {
+                  color: borderColor
+                },
+                ticks: {
+                  color: textColor
+                }
+              },
+              x: {
+                grid: {
+                  color: borderColor
+                },
+                ticks: {
+                  color: textColor
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  color: textColor
+                }
+              }
+            }
+          }
+        });
+      };
+
+      const formatDate = (date) => {
+        return `${date.getDate()}/${date.getMonth() + 1}`;
+      };
+
+      const getWeekNumber = (date) => {
+        const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+        const dayNum = d.getUTCDay() || 7;
+        d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+        const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+        return Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+      };
+
+      const getWeekStart = (date) => {
+        const d = new Date(date);
+        const day = d.getDay();
+        const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+        return new Date(d.setDate(diff));
+      };
+
+      const handleConsumptionChange = (date, value) => {
+        const newData = calendarData.map(item => 
+          item.date.toDateString() === date.toDateString() 
+            ? { ...item, consumption: parseInt(value) || 0 }
+            : item
+        );
+        setCalendarData(newData);
+      };
+
+      const openNoteModal = (date, note) => {
+        setCurrentNote({ date, note });
+        setShowModal(true);
+      };
+
+      const saveNote = () => {
+        const newData = calendarData.map(item => 
+          item.date.toDateString() === currentNote.date.toDateString() 
+            ? { ...item, note: currentNote.note }
+            : item
+        );
+        setCalendarData(newData);
+        setShowModal(false);
+      };
+
+      const getMonthName = (date) => {
+        const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        return months[date.getMonth()];
+      };
+
+      const groupByMonth = (data) => {
+        const grouped = {};
+        data.forEach(item => {
+          const monthYear = `${item.date.getFullYear()}-${item.date.getMonth()}`;
+          if (!grouped[monthYear]) {
+            grouped[monthYear] = [];
+          }
+          grouped[monthYear].push(item);
+        });
+        return grouped;
+      };
+
+      const getSubstanceIcon = (substanceId) => {
+        const substance = substances.find(s => s.id === substanceId);
+        return substance ? substance.icon : null;
+      };
+
+      const getMonthlyData = () => {
+        const monthlyData = calendarData.reduce((acc, item) => {
+          const monthKey = `${item.date.getFullYear()}-${item.date.getMonth()}`;
+          if (!acc[monthKey]) {
+            acc[monthKey] = { 
+              month: getMonthName(item.date),
+              year: item.date.getFullYear(),
+              totalConsumption: 0,
+              daysWithConsumption: 0
+            };
+          }
+          acc[monthKey].totalConsumption += item.consumption;
+          if (item.consumption > 0) acc[monthKey].daysWithConsumption += 1;
+          return acc;
+        }, {});
+
+        return Object.values(monthlyData).sort((a, b) => {
+          if (a.year !== b.year) return a.year - b.year;
+          return Object.keys(monthlyData).indexOf(a.month) - Object.keys(monthlyData).indexOf(b.month);
+        });
+      };
+
+      const renderMonthCalendar = (monthData) => {
+        const firstDay = new Date(monthData[0].date);
+        const lastDay = new Date(monthData[monthData.length - 1].date);
+        
+        // Fill in empty days at beginning of month
+        const daysBeforeMonth = firstDay.getDay();
+        const startPadding = [];
+        for (let i = 0; i < daysBeforeMonth; i++) {
+          startPadding.push({ isEmpty: true });
+        }
+        
+        // Fill in empty days at end of month
+        const daysAfterMonth = 6 - lastDay.getDay();
+        const endPadding = [];
+        for (let i = 0; i < daysAfterMonth; i++) {
+          endPadding.push({ isEmpty: true });
+        }
+
+        const allDays = [...startPadding, ...monthData, ...endPadding];
+
+        return (
+          <div key={`${firstDay.getFullYear()}-${firstDay.getMonth()}`} className="mb-8 fade-in">
+            <h2 className="text-xl font-bold mb-4 flex items-center">
+              {getMonthName(firstDay)} {firstDay.getFullYear()}
+            </h2>
+            <div className="grid grid-cols-7 gap-2">
+              {['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'].map(day => (
+                <div key={day} className="text-center font-bold p-2">{day}</div>
+              ))}
+              {allDays.map((item, index) => (
+                <div 
+                  key={index} 
+                  className={`card p-2 ${item.isEmpty ? 'opacity-30' : ''} ${item.consumption > 0 ? 'high-consumption' : ''}`}
+                >
+                  {!item.isEmpty && (
+                    <>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="font-bold">{item.date.getDate()}</span>
+                        {item.consumption > 0 && (
+                          <span className="font-bold text-blue-500">{item.consumption}</span>
+                        )}
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <input 
+                          type="number" 
+                          min="0"
+                          value={item.consumption}
+                          onChange={(e) => handleConsumptionChange(item.date, e.target.value)}
+                          className="w-full text-sm"
+                          placeholder="Consumo"
+                        />
+                        <button 
+                          onClick={() => openNoteModal(item.date, item.note)}
+                          className="btn-outline flex items-center justify-center gap-1 text-sm py-1"
+                        >
+                          <span className="substance-icon"><NotesIcon /></span>
+                          {item.note ? 'Ver nota' : '+'}
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      };
+
+      const toggleTheme = () => {
+        setTheme(theme === 'light' ? 'dark' : 'light');
+      };
+
+      const exportToPDF = () => {
+        alert("Función de exportación en desarrollo");
+      };
+
+      const groupedData = groupByMonth(calendarData);
+      const monthlyData = getMonthlyData();
+
+      const totalDays = calendarData.length;
+      const daysWithConsumption = calendarData.filter(day => day.consumption > 0).length;
+      const totalConsumption = calendarData.reduce((sum, day) => sum + day.consumption, 0);
+      const averageConsumption = daysWithConsumption > 0 ? (totalConsumption / daysWithConsumption).toFixed(1) : 0;
+      const percentDaysWithConsumption = ((daysWithConsumption / totalDays) * 100).toFixed(1);
+
+      return (
+        <div className="container mx-auto p-4 max-w-6xl">
+          {/* Header */}
+          <header className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+            <div>
+              <h1 className="text-3xl font-bold mb-1">Línea Base Retrospectiva</h1>
+              <p className="text-sm opacity-70">Registro histórico de consumo de sustancias</p>
+            </div>
+            
+            <div className="flex gap-2">
+              <button onClick={clearAllData} className="btn-outline p-2 flex items-center gap-2 text-red-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 6h18"></path>
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                  <line x1="10" y1="11" x2="10" y2="17"></line>
+                  <line x1="14" y1="11" x2="14" y2="17"></line>
+                </svg>
+                <span className="hidden md:inline">Limpiar</span>
+              </button>
+              <button onClick={toggleTheme} className="btn-outline p-2">
+                {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+              </button>
+              <button onClick={exportToPDF} className="btn-outline p-2 flex items-center gap-2">
+                <DownloadIcon /> <span className="hidden md:inline">Exportar</span>
+              </button>
+            </div>
+          </header>
+          
+          {/* Patient Info and Substance Selection */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="card p-4">
+              <label className="block mb-1 text-sm">Nombre del paciente</label>
+              <input
+                type="text"
+                placeholder="Nombre completo"
+                value={patientName}
+                onChange={(e) => setPatientName(e.target.value)}
+                className="w-full mb-2"
+              />
+            </div>
+            
+            <div className="card p-4">
+              <label className="block mb-1 text-sm">ID del paciente</label>
+              <input
+                type="text"
+                placeholder="Identificación"
+                value={patientId}
+                onChange={(e) => setPatientId(e.target.value)}
+                className="w-full mb-2"
+              />
+            </div>
+            
+            <div className="card p-4">
+              <label className="block mb-1 text-sm">Sustancia</label>
+              <select 
+                value={selectedSubstance}
+                onChange={(e) => setSelectedSubstance(e.target.value)}
+                className="w-full flex items-center"
+              >
+                {substances.map(substance => (
+                  <option key={substance.id} value={substance.id}>
+                    {substance.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          
+          {/* Stats Summary */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="card p-4">
+              <h3 className="text-sm opacity-70 mb-1">Días totales</h3>
+              <p className="text-2xl font-bold">{totalDays}</p>
+            </div>
+            
+            <div className="card p-4">
+              <h3 className="text-sm opacity-70 mb-1">Días con consumo</h3>
+              <p className="text-2xl font-bold">{daysWithConsumption} <span className="text-sm opacity-70">({percentDaysWithConsumption}%)</span></p>
+            </div>
+            
+            <div className="card p-4">
+              <h3 className="text-sm opacity-70 mb-1">Consumo total</h3>
+              <p className="text-2xl font-bold">{totalConsumption}</p>
+            </div>
+            
+            <div className="card p-4">
+              <h3 className="text-sm opacity-70 mb-1">Promedio por día de consumo</h3>
+              <p className="text-2xl font-bold">{averageConsumption}</p>
+            </div>
+          </div>
+          
+          {/* View Toggle */}
+          <div className="flex justify-center mb-6">
+            <div className="inline-flex rounded-md">
+              <button 
+                className={`px-4 py-2 rounded-l-md ${viewType === 'calendar' ? 'btn-primary' : 'btn-outline'}`}
+                onClick={() => setViewType('calendar')}
+              >
+                Calendario
+              </button>
+              <button 
+                className={`px-4 py-2 ${viewType === 'weekly' ? 'btn-primary' : 'btn-outline'}`}
+                onClick={() => setViewType('weekly')}
+              >
+                Semanal
+              </button>
+              <button 
+                className={`px-4 py-2 rounded-r-md ${viewType === 'monthly' ? 'btn-primary' : 'btn-outline'}`}
+                onClick={() => setViewType('monthly')}
+              >
+                Mensual
+              </button>
+            </div>
+          </div>
+
+          {/* Content based on selected view */}
+          {viewType === 'calendar' && (
+            <div className="fade-in">
+              {Object.values(groupedData).map(renderMonthCalendar)}
+            </div>
+          )}
+          
+          {viewType === 'weekly' && (
+            <div className="card p-6 fade-in">
+              <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                Consumo semanal de {substances.find(s => s.id === selectedSubstance)?.name}
+                <span className="substance-icon">{getSubstanceIcon(selectedSubstance)}</span>
+              </h2>
+              
+              {isChartJsLoaded() ? (
+                <div className="h-96 w-full">
+                  <canvas ref={weeklyChartRef}></canvas>
+                </div>
+              ) : (
+                <div className="h-96 w-full flex items-center justify-center">
+                  <p>No se pudo cargar la gráfica. Por favor, verifica la conexión a internet.</p>
+                </div>
+              )}
+              
+              <div className="mt-6">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="text-left p-2 border-b border-gray-300">Semana</th>
+                      <th className="text-right p-2 border-b border-gray-300">Días con consumo</th>
+                      <th className="text-right p-2 border-b border-gray-300">Consumo total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {chartData.map((week, index) => (
+                      <tr key={index} className={index % 2 === 0 ? 'bg-opacity-5 bg-gray-500' : ''}>
+                        <td className="p-2 border-b border-gray-300">Semana del {week.weekStart}</td>
+                        <td className="text-right p-2 border-b border-gray-300">{week.daysWithConsumption}</td>
+                        <td className="text-right p-2 border-b border-gray-300">{week.consumption}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+          
+          {viewType === 'monthly' && (
+            <div className="card p-6 fade-in">
+              <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                Consumo mensual de {substances.find(s => s.id === selectedSubstance)?.name}
+                <span className="substance-icon">{getSubstanceIcon(selectedSubstance)}</span>
+              </h2>
+              
+              {isChartJsLoaded() ? (
+                <div className="h-96 w-full">
+                  <canvas ref={monthlyChartRef}></canvas>
+                </div>
+              ) : (
+                <div className="h-96 w-full flex items-center justify-center">
+                  <p>No se pudo cargar la gráfica. Por favor, verifica la conexión a internet.</p>
+                </div>
+              )}
+              
+              <div className="mt-6">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="text-left p-2 border-b border-gray-300">Mes</th>
+                      <th className="text-right p-2 border-b border-gray-300">Días con consumo</th>
+                      <th className="text-right p-2 border-b border-gray-300">Consumo total</th>
+                      <th className="text-right p-2 border-b border-gray-300">Promedio por día</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {monthlyData.map((month, index) => (
+                      <tr key={index} className={index % 2 === 0 ? 'bg-opacity-5 bg-gray-500' : ''}>
+                        <td className="p-2 border-b border-gray-300">{month.month} {month.year}</td>
+                        <td className="text-right p-2 border-b border-gray-300">{month.daysWithConsumption}</td>
+                        <td className="text-right p-2 border-b border-gray-300">{month.totalConsumption}</td>
+                        <td className="text-right p-2 border-b border-gray-300">
+                          {month.daysWithConsumption > 0 
+                            ? (month.totalConsumption / month.daysWithConsumption).toFixed(1) 
+                            : '0'}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+          
+          {/* Modal para notas */}
+          {showModal && (
+            <div className="modal">
+              <div className="modal-content fade-in">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-bold">
+                    Nota para {currentNote.date.getDate()}/{currentNote.date.getMonth() + 1}/{currentNote.date.getFullYear()}
+                  </h3>
+                  <button onClick={() => setShowModal(false)} className="btn-outline p-1">
+                    <CloseIcon />
+                  </button>
+                </div>
+                <textarea
+                  value={currentNote.note}
+                  onChange={(e) => setCurrentNote({...currentNote, note: e.target.value})}
+                  className="w-full h-32 p-2 mb-4"
+                  placeholder="Escribe tus notas aquí..."
+                ></textarea>
+                <div className="flex justify-end gap-2">
+                  <button onClick={() => setShowModal(false)} className="btn-outline px-4 py-2">
+                    Cancelar
+                  </button>
+                  <button onClick={saveNote} className="btn-primary px-4 py-2">
+                    Guardar
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    // Componente para mostrar información de ayuda
+    const HelpTooltip = ({ text }) => {
+      return (
+        <div className="tooltip ml-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <span className="tooltip-text">{text}</span>
+        </div>
+      );
+    };
+
+    // Renderizar la aplicación
+    ReactDOM.render(
+      <LineaBaseRetrospectiva />,
+      document.getElementById('root')
+    );
+  </script>
+  <div class="footer">
+    <p>Implementación online de la Línea Base Retrospectiva creada por Carlos Vélez con la Ayuda de Claude AI</p>
+    <p>Sólo para propósitos pedagógicos</p>
+    <p>Fundación Universitaria Konrad Lorenz</p>
+    <p>Consumo de SPA en adolescentes</p>
+</div>
+</body>
+</html>
